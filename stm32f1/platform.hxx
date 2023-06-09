@@ -28,13 +28,30 @@ namespace stm32
 		volatile uint32_t bufferTablePtr;
 	};
 
-	constexpr static const uintptr_t usbBase{0x40005c00U};
+	// Reset and Clock Control peripheral structure
+	struct rcc_t final
+	{
+		volatile uint32_t clockCtrl;
+		volatile uint32_t clockConfig;
+		volatile uint32_t clockInterrupt;
+		volatile uint32_t apb2PeriphReset;
+		volatile uint32_t apb1PeriphReset;
+		volatile uint32_t ahbPeriphReset;
+		volatile uint32_t apb2PeriphClockEn;
+		volatile uint32_t apb1PeriphClockEn;
+		volatile uint32_t backupDomainCtrl;
+		volatile uint32_t ctrlStatus;
+	};
+
+	constexpr static uintptr_t usbBase{0x40005c00U};
+	constexpr static uintptr_t rccBase{0x40021000U};
 } // namespace stm32
 // NOLINTEND(cppcoreguidelines-avoid-const-or-ref-data-members)
 
 // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast)
 // NOLINTBEGIN(performance-no-int-to-ptr
 // NOLINTBEGIN(cppcoreguidelines-avoid-non-const-global-variables)
+static auto &rcc{*reinterpret_cast<stm32::rcc_t *>(stm32::rccBase)};
 static auto &usbCtrl{*reinterpret_cast<stm32::usb_t *>(stm32::usbBase)};
 // NOLINTEND(cppcoreguidelines-avoid-non-const-global-variables)
 // NOLINTEND(performance-no-int-to-ptr
