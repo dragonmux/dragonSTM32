@@ -12,14 +12,7 @@ namespace stm32
 	// USB periphal structure
 	struct usb_t final
 	{
-		volatile uint32_t ep0CtrlStat;
-		volatile uint32_t ep1CtrlStat;
-		volatile uint32_t ep2CtrlStat;
-		volatile uint32_t ep3CtrlStat;
-		volatile uint32_t ep4CtrlStat;
-		volatile uint32_t ep5CtrlStat;
-		volatile uint32_t ep6CtrlStat;
-		volatile uint32_t ep7CtrlStat;
+		std::array<volatile uint32_t, 8> epCtrlStat;
 		std::array<const volatile uint32_t, 4> reserved;
 		volatile uint32_t ctrl;
 		volatile uint32_t intStatus;
@@ -74,6 +67,7 @@ namespace stm32
 	};
 
 	constexpr static uintptr_t usbBase{0x40005c00U};
+	constexpr static uintptr_t packetBufferBase{0x40006000U};
 	constexpr static uintptr_t gpioABase{0x40010800U};
 	constexpr static uintptr_t gpioBBase{0x40010c00U};
 	constexpr static uintptr_t gpioCBase{0x40011000U};
