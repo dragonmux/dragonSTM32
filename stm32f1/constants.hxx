@@ -3,6 +3,7 @@
 #define STM32F1_CONSTANTS_HXX
 
 #include <cstdint>
+#include "stm32f1/platform.hxx"
 
 namespace vals
 {
@@ -23,6 +24,71 @@ namespace vals
 		constexpr static uint32_t addressClrMask{0xffffff00U};
 		constexpr static uint32_t addressUSBEnable{0x00000080U};
 	} // namespace usb
+
+	enum class gpio_t : uint8_t
+	{
+		pin0 = 0,
+		pin1 = 1,
+		pin2 = 2,
+		pin3 = 3,
+		pin4 = 4,
+		pin5 = 5,
+		pin6 = 6,
+		pin7 = 7,
+		pin8 = 8,
+		pin9 = 9,
+		pin10 = 10,
+		pin11 = 11,
+		pin12 = 12,
+		pin13 = 13,
+		pin14 = 14,
+		pin15 = 15,
+	};
+
+	namespace gpio
+	{
+		enum class mode_t : uint8_t
+		{
+			input = 0U,
+			output10MHz = 1U,
+			output2MHz = 2U,
+			output50MHz = 3U
+		};
+
+		enum class config_t : uint8_t
+		{
+			inputAnalog = 0U,
+			inputFloating = 1U,
+			inputPullUpDown = 2U,
+			outputNormalPushPull = 3U,
+			outputNormalOpenDrain = 4U,
+			outputAltFnPushPull = 8U,
+			outputAltOpenDrain = 12U
+		};
+
+		namespace internal
+		{
+			constexpr inline uint32_t config(const config_t pinConfig)
+			{
+				const auto value{static_cast<uint8_t>(pinConfig)};
+				if (value < static_cast<uint8_t>(config_t::outputNormalPushPull))
+					return value << 2U;
+				if (value > static_cast<uint8_t>(config_t::outputNormalPushPull))
+					return value;
+				return 0U;
+			}
+		} // namespace internal
+
+		template<gpio_t pinNumber> constexpr inline void config(stm32::gpio_t &gpio, const mode_t pinMode,
+			const config_t pinConfig)
+		{
+			constexpr size_t index = (static_cast<uint8_t>(pinNumber) >> 3U) & 1U;
+			constexpr uint8_t shift = (static_cast<uint8_t>(pinNumber) & 7U) * 4U;
+			constexpr uint32_t configMask = ~((0x0000000fU) << shift);
+			gpio.config[index] = (gpio.config[index] & configMask) | (static_cast<uint32_t>(pinMode) << shift) |
+				(internal::config(pinConfig) << shift);
+		}
+	} // namespace gpio
 
 	namespace rcc
 	{
