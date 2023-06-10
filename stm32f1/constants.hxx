@@ -18,6 +18,7 @@ namespace vals
 		constexpr static uint8_t endpointDirMask{0x7fU};
 		constexpr inline uint8_t endpoint(const endpointDir_t dir, const uint8_t number) noexcept
 			{ return uint8_t(dir) | (number & endpointDirMask); }
+		constexpr static size_t endpoints{8U};
 
 		// Device address register constants
 		constexpr static uint32_t addressMask{0x0000007fU};
@@ -53,6 +54,32 @@ namespace vals
 		constexpr static uint32_t itrStatusError{0x00002000U};
 		constexpr static uint32_t itrStatusPacketMem{0x00004000U};
 		constexpr static uint32_t itrStatusCorrectXfer{0x00008000U};
+
+		// Endpoint register constants
+		constexpr static uint32_t epClearMask{0xffff0000U};
+		constexpr static uint32_t epAddressMask{0x0000000fU};
+		constexpr static uint32_t epCtrlTXDisabled{0x00000000U};
+		constexpr static uint32_t epCtrlTXStall{0x00000010U};
+		constexpr static uint32_t epCtrlTXNack{0x00000020U};
+		constexpr static uint32_t epCtrlTXValid{0x00000030U};
+		constexpr static uint32_t epTxDataToggle{0x00000040U};
+		constexpr static uint32_t epStatusTxCorrectXfer{0x00000080U};
+		constexpr static uint32_t epCtrlKindStatusOut{0x00000100U};
+		constexpr static uint32_t epCtrlKindDoubleBuffered{0x00000100U};
+		constexpr static uint32_t epCtrlTypeBulk{0x00000000U};
+		constexpr static uint32_t epCtrlTypeControl{0x00000200U};
+		constexpr static uint32_t epCtrlTypeIsochronous{0x00000400U};
+		constexpr static uint32_t epCtrlTypeInterrupt{0x00000600U};
+		constexpr static uint32_t epStatusSetup{0x00000800U};
+		constexpr static uint32_t epCtrlRXDisabled{0x00000000U};
+		constexpr static uint32_t epCtrlRXStall{0x00001000U};
+		constexpr static uint32_t epCtrlRXNack{0x00002000U};
+		constexpr static uint32_t epCtrlRXValid{0x00003000U};
+		constexpr static uint32_t epRxDataToggle{0x00004000U};
+		constexpr static uint32_t epStatusRxCorrectXfer{0x00008000U};
+
+		constexpr inline uint32_t epAddress(const uint8_t address) noexcept
+			{ return address & epAddressMask; }
 	} // namespace usb
 
 	enum class gpio_t : uint8_t
