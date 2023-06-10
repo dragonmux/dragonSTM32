@@ -166,6 +166,72 @@ namespace vals
 		constexpr static uint32_t apb1PeriphClockEnPower{0x10000000U};
 		constexpr static uint32_t apb1PeriphClockEnDAC{0x20000000U};
 	} // namespace rcc
+
+	namespace irqs
+	{
+		constexpr static uint32_t windowWatchdog{0U};
+		constexpr static uint32_t programmableVoltageDetector{1U};
+		constexpr static uint32_t tamper{2U};
+		constexpr static uint32_t rtc{3U};
+		constexpr static uint32_t flash{4U};
+		constexpr static uint32_t rcc{5U};
+		constexpr static uint32_t exti0{6U};
+		constexpr static uint32_t exti1{7U};
+		constexpr static uint32_t exti2{8U};
+		constexpr static uint32_t exti3{9U};
+		constexpr static uint32_t exti4{10U};
+		constexpr static uint32_t dma1Channel1{11U};
+		constexpr static uint32_t dma1Channel2{12U};
+		constexpr static uint32_t dma1Channel3{13U};
+		constexpr static uint32_t dma1Channel4{14U};
+		constexpr static uint32_t dma1Channel5{15U};
+		constexpr static uint32_t dma1Channel6{16U};
+		constexpr static uint32_t dma1Channel7{17U};
+		constexpr static uint32_t adc1And2{18U};
+		constexpr static uint32_t usbHighPriority{19U};
+		constexpr static uint32_t canTX{19U};
+		constexpr static uint32_t usbLowPriority{20U};
+		constexpr static uint32_t canRX0{20U};
+		constexpr static uint32_t canRX1{21U};
+		constexpr static uint32_t canSCE{22U};
+		constexpr static uint32_t exti5Through9{23U};
+		constexpr static uint32_t timer1Break{24U};
+		constexpr static uint32_t timer1Update{25U};
+		constexpr static uint32_t timer1TriggerComm{26U};
+		constexpr static uint32_t timer1CaptureCompare{27U};
+		constexpr static uint32_t timer2{28U};
+		constexpr static uint32_t timer3{29U};
+		constexpr static uint32_t timer4{30U};
+		constexpr static uint32_t i2c1Event{31U};
+		constexpr static uint32_t i2c1Error{32U};
+		constexpr static uint32_t i2c2Event{33U};
+		constexpr static uint32_t i2c2Error{34U};
+		constexpr static uint32_t spi1{35U};
+		constexpr static uint32_t spi2{36U};
+		constexpr static uint32_t usart1{37U};
+		constexpr static uint32_t usart2{38U};
+		constexpr static uint32_t usart3{39U};
+		constexpr static uint32_t exti10Through15{40U};
+		constexpr static uint32_t rtcAlarm{41U};
+		constexpr static uint32_t usbWakeup{42U};
+		constexpr static uint32_t timer8Break{43U};
+		constexpr static uint32_t timer8Update{44U};
+		constexpr static uint32_t timer8TriggerComm{45U};
+		constexpr static uint32_t timer8CaptureCompare{46U};
+		constexpr static uint32_t adc3{47U};
+		constexpr static uint32_t fsmc{48U};
+		constexpr static uint32_t sdio{49U};
+		constexpr static uint32_t timer5{50U};
+		constexpr static uint32_t spi3{51U};
+		constexpr static uint32_t uart4{52U};
+		constexpr static uint32_t uart5{53U};
+		constexpr static uint32_t timer6{54U};
+		constexpr static uint32_t timer7{55U};
+		constexpr static uint32_t dma2Channel1{56U};
+		constexpr static uint32_t dma2Channel2{57U};
+		constexpr static uint32_t dma2Channel3{58U};
+		constexpr static uint32_t dma2Channel4And5{29U};
+	} // namespace irqs
 } // namespace vals
 
 #endif /*STM32F1_CONSTANTS_HXX*/

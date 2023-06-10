@@ -54,6 +54,25 @@ namespace stm32
 		volatile uint32_t ctrlStatus;
 	};
 
+	// Nested Vectored Interrupt Controller structure
+	struct nvic_t final
+	{
+		std::array<volatile uint32_t, 8> intrSetEnable;
+		std::array<const volatile uint32_t, 24> reserved0;
+		std::array<volatile uint32_t, 8> intrClrEnable;
+		std::array<const volatile uint32_t, 24> reserved1;
+		std::array<volatile uint32_t, 8> intrSetPending;
+		std::array<const volatile uint32_t, 24> reserved2;
+		std::array<volatile uint32_t, 8> intrClrPending;
+		std::array<const volatile uint32_t, 24> reserved3;
+		std::array<const volatile uint32_t, 8> intrActive;
+
+		constexpr void enableInterrupt(const uint32_t intrNumber) noexcept
+			{ intrSetEnable[intrNumber >> 5U] = UINT32_C(1) << (intrNumber & 0x1fU); }
+		constexpr void disableInterrupt(const uint32_t intrNumber) noexcept
+			{ intrClrEnable[intrNumber >> 5U] = UINT32_C(1) << (intrNumber & 0x1fU); }
+	};
+
 	constexpr static uintptr_t usbBase{0x40005c00U};
 	constexpr static uintptr_t gpioABase{0x40010800U};
 	constexpr static uintptr_t gpioBBase{0x40010c00U};
@@ -63,6 +82,8 @@ namespace stm32
 	constexpr static uintptr_t gpioFBase{0x40011c00U};
 	constexpr static uintptr_t gpioGBase{0x40012000U};
 	constexpr static uintptr_t rccBase{0x40021000U};
+
+	constexpr static uintptr_t nvicBase{0xe000e100U};
 } // namespace stm32
 // NOLINTEND(cppcoreguidelines-avoid-const-or-ref-data-members)
 
@@ -78,6 +99,8 @@ static auto &gpioE{*reinterpret_cast<stm32::gpio_t *>(stm32::gpioEBase)};
 static auto &gpioF{*reinterpret_cast<stm32::gpio_t *>(stm32::gpioFBase)};
 static auto &gpioG{*reinterpret_cast<stm32::gpio_t *>(stm32::gpioGBase)};
 static auto &usbCtrl{*reinterpret_cast<stm32::usb_t *>(stm32::usbBase)};
+
+static auto &nvic{*reinterpret_cast<stm32::nvic_t *>(stm32::nvicBase)};
 // NOLINTEND(cppcoreguidelines-avoid-non-const-global-variables)
 // NOLINTEND(performance-no-int-to-ptr
 // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast)
