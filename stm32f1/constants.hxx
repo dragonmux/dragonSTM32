@@ -117,6 +117,11 @@ namespace vals
 			gpio.config[index] = (gpio.config[index] & configMask) | (static_cast<uint32_t>(pinMode) << shift) |
 				(internal::config(pinConfig) << shift);
 		}
+
+		constexpr inline void clear(stm32::gpio_t &gpio, gpio_t pinNumber)
+			{ gpio.pinReset = UINT32_C(1) << static_cast<uint8_t>(pinNumber); }
+		constexpr inline void set(stm32::gpio_t &gpio, gpio_t pinNumber)
+			{ gpio.pinSetReset = UINT32_C(1) << static_cast<uint8_t>(pinNumber); }
 	} // namespace gpio
 
 	namespace rcc
