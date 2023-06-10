@@ -26,6 +26,7 @@ namespace vals
 
 		// Control register constants
 		constexpr static uint32_t controlMask{0xffff00e0U};
+		constexpr static uint32_t controlItrMask{0xffff00ffU};
 		constexpr static uint32_t controlForceReset{0x00000001U};
 		constexpr static uint32_t controlPowerDown{0x00000002U};
 		constexpr static uint32_t controlLowPowerMode{0x00000004U};
@@ -51,7 +52,7 @@ namespace vals
 		constexpr static uint32_t itrStatusWakeup{0x00001000U};
 		constexpr static uint32_t itrStatusError{0x00002000U};
 		constexpr static uint32_t itrStatusPacketMem{0x00004000U};
-		constexpr static uint32_t itrStatusCorrextXfer{0x00008000U};
+		constexpr static uint32_t itrStatusCorrectXfer{0x00008000U};
 	} // namespace usb
 
 	enum class gpio_t : uint8_t
