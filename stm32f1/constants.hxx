@@ -23,6 +23,35 @@ namespace vals
 		constexpr static uint32_t addressMask{0x0000007fU};
 		constexpr static uint32_t addressClrMask{0xffffff00U};
 		constexpr static uint32_t addressUSBEnable{0x00000080U};
+
+		// Control register constants
+		constexpr static uint32_t controlMask{0xffff00e0U};
+		constexpr static uint32_t controlForceReset{0x00000001U};
+		constexpr static uint32_t controlPowerDown{0x00000002U};
+		constexpr static uint32_t controlLowPowerMode{0x00000004U};
+		constexpr static uint32_t controlForceSuspend{0x00000008U};
+		constexpr static uint32_t controlResume{0x00000010U};
+		constexpr static uint32_t controlExpectedSOFItrEn{0x00000100U};
+		constexpr static uint32_t controlSOFItrEn{0x00000200U};
+		constexpr static uint32_t controlResetItrEn{0x00000400U};
+		constexpr static uint32_t controlSuspendItrEn{0x00000800U};
+		constexpr static uint32_t controlWakeupItrEn{0x00001000U};
+		constexpr static uint32_t controlErrorItrEn{0x00002000U};
+		constexpr static uint32_t controlPacketMemItrEn{0x00004000U};
+		constexpr static uint32_t controlCorrectXferItrEn{0x00008000U};
+
+		// Interrupt Status register constants
+		constexpr static uint32_t itrStatusClearMask{0xffff00e0U};
+		constexpr static uint32_t itrStatusMask{0x0000ff1fU};
+		constexpr static uint32_t itrStatusEndpoint{0x0000001fU};
+		constexpr static uint32_t itrStatusExpectedSOF{0x00000100U};
+		constexpr static uint32_t itrStatusSOF{0x00000200U};
+		constexpr static uint32_t itrStatusReset{0x00000400U};
+		constexpr static uint32_t itrStatusSuspend{0x00000800U};
+		constexpr static uint32_t itrStatusWakeup{0x00001000U};
+		constexpr static uint32_t itrStatusError{0x00002000U};
+		constexpr static uint32_t itrStatusPacketMem{0x00004000U};
+		constexpr static uint32_t itrStatusCorrextXfer{0x00008000U};
 	} // namespace usb
 
 	enum class gpio_t : uint8_t
