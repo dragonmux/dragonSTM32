@@ -77,9 +77,32 @@ namespace vals
 		constexpr static uint32_t epCtrlRXValid{0x00003000U};
 		constexpr static uint32_t epRxDataToggle{0x00004000U};
 		constexpr static uint32_t epStatusRxCorrectXfer{0x00008000U};
+		constexpr static uint32_t epCtrlTXMask{0xffffff0fU};
+		constexpr static uint32_t epCtrlRXMask{0xffff0fffU};
+		constexpr static uint32_t epCtrlTypeMask{0xfffff9ffU};
 
-		constexpr inline uint32_t epAddress(const uint8_t address) noexcept
+		// Recieve Endpoint Byte Count register constants
+		constexpr static uint32_t rxCountBlockSize2{0x00000000U};
+		constexpr static uint32_t rxCountBlockSize32{0x00008000U};
+		constexpr static uint32_t rxCountBlockCountMask{0x00007c00U};
+		constexpr static size_t rxCountBlockCountShift{10U};
+
+		constexpr inline uint32_t epAddress(const size_t address) noexcept
 			{ return address & epAddressMask; }
+
+		// NB: This assumes the buffer size is a power of two, more than 1 and less than 1024
+		constexpr inline uint32_t rxBufferSize(const size_t bufferLength) noexcept
+		{
+			if (bufferLength < 64U)
+			{
+				// Divide the length by 2 then shift it up into place
+				const uint32_t blockCount = (bufferLength >> 1U) << rxCountBlockCountShift;
+				return rxCountBlockSize2 | (blockCount & rxCountBlockCountMask);
+			}
+			// Divide the length by 32 then shift it up into place
+			const uint32_t blockCount = (bufferLength >> 5U) << rxCountBlockCountShift;
+			return rxCountBlockSize32 | (blockCount & rxCountBlockCountMask);
+		}
 	} // namespace usb
 
 	enum class gpio_t : uint8_t
@@ -266,5 +289,10 @@ namespace vals
 		constexpr static uint32_t dma2Channel4And5{29U};
 	} // namespace irqs
 } // namespace vals
+
+namespace stm32
+{
+	using usbEPTable_t = std::array<usbEP_t, vals::usb::endpoints>;
+} // namespace stm32
 
 #endif /*STM32F1_CONSTANTS_HXX*/

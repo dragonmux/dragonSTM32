@@ -21,6 +21,15 @@ namespace stm32
 		volatile uint32_t bufferTablePtr;
 	};
 
+	// USB endpoint structure
+	struct usbEP_t final
+	{
+		volatile uint32_t txAddress;
+		volatile uint32_t txCount;
+		volatile uint32_t rxAddress;
+		volatile uint32_t rxCount;
+	};
+
 	// GPIO peripheral structure
 	struct gpio_t final
 	{
