@@ -85,6 +85,7 @@ namespace vals
 		constexpr static uint32_t rxCountBlockSize2{0x00000000U};
 		constexpr static uint32_t rxCountBlockSize32{0x00008000U};
 		constexpr static uint32_t rxCountBlockCountMask{0x00007c00U};
+		constexpr static uint32_t rxCountByteMask{0x000001ffU};
 		constexpr static size_t rxCountBlockCountShift{10U};
 
 		constexpr inline uint32_t epAddress(const size_t address) noexcept
