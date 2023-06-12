@@ -287,7 +287,10 @@ namespace vals
 		constexpr static uint32_t dma2Channel1{56U};
 		constexpr static uint32_t dma2Channel2{57U};
 		constexpr static uint32_t dma2Channel3{58U};
-		constexpr static uint32_t dma2Channel4And5{29U};
+		constexpr static uint32_t dma2Channel4And5{59U};
+
+		constexpr static size_t systemIRQs{15U};
+		constexpr static size_t peripheralIRQs{60U};
 	} // namespace irqs
 } // namespace vals
 
