@@ -56,6 +56,17 @@ namespace stm32
 		volatile uint32_t ctrlStatus;
 	};
 
+	// System (Cortex-M) peripherals
+
+	// System Tick structure
+	struct sysTick_t final
+	{
+		volatile uint32_t ctrl;
+		volatile uint32_t load;
+		volatile uint32_t value;
+		volatile uint32_t calibration;
+	};
+
 	// Nested Vectored Interrupt Controller structure
 	struct nvic_t final
 	{
@@ -75,6 +86,150 @@ namespace stm32
 			{ intrClrEnable[intrNumber >> 5U] = UINT32_C(1) << (intrNumber & 0x1fU); }
 	};
 
+	// System Controller Block
+	struct scb_t final
+	{
+		const volatile uint32_t cpuid;
+		volatile uint32_t intCtrl;
+		volatile uint32_t vtable;
+		volatile uint32_t apint;
+		volatile uint32_t sysCtrl;
+		volatile uint32_t cfgCtrl;
+		std::array<volatile uint32_t, 3> sysPriority;
+		volatile uint32_t sysHandlerCtrl;
+		volatile uint32_t faultStatus;
+		volatile uint32_t hardFaultStatus;
+		std::array<const volatile uint32_t, 2> reserved0;
+		volatile uint32_t memMgmtFaultAddr;
+		volatile uint32_t faultAddr;
+	};
+
+	// Memory Protection Unit structure
+	struct mpu_t final
+	{
+		struct regionAlias_t final
+		{
+			volatile uint32_t base;
+			volatile uint32_t attr;
+		};
+
+		const volatile uint32_t type;
+		volatile uint32_t ctrl;
+		volatile uint32_t number;
+		volatile uint32_t base;
+		volatile uint32_t attr;
+		std::array<regionAlias_t, 3> aliases;
+	};
+
+	// Debug Controller Block structure
+	struct dcb_t final
+	{
+		volatile uint32_t haltCtrlStatus;
+		volatile uint32_t coreRegisterSelect;
+		volatile uint32_t coreRegisterData;
+		volatile uint32_t exceptMonitorCtrl;
+	};
+
+	// Peripheral ID structure
+	struct pid_t final
+	{
+	private:
+		std::array<const volatile uint32_t, 8> pid;
+
+	public:
+		[[nodiscard]] constexpr auto begin() noexcept { return pid.begin(); }
+		[[nodiscard]] constexpr auto begin() const noexcept { return pid.begin(); }
+		[[nodiscard]] constexpr auto end() noexcept { return pid.end(); }
+		[[nodiscard]] constexpr auto end() const noexcept { return pid.end(); }
+		[[nodiscard]] constexpr auto size() const noexcept { return pid.size(); }
+		[[nodiscard]] constexpr auto data() noexcept { return pid.data(); }
+		[[nodiscard]] constexpr auto data() const noexcept { return pid.data(); }
+		[[nodiscard]] constexpr auto &operator [](const size_t i) noexcept
+			{ return pid[(i + 4U) & 7U]; }
+		[[nodiscard]] constexpr auto &operator [](const size_t i) const noexcept
+			{ return pid[(i + 4U) & 7U]; }
+	};
+
+	// Instrumentation Trace Macrocell structure
+	struct itm_t final
+	{
+		// +0x0
+		std::array<volatile uint32_t, 32> channelData;
+		std::array<const volatile uint32_t, 864> reserved0;
+		// +0xE00
+		volatile uint32_t traceChannelEn;
+		std::array<const volatile uint32_t, 15> reserved1;
+		// +0xE40
+		volatile uint32_t tracePriv;
+		std::array<const volatile uint32_t, 15> reserved2;
+		// +0xE80
+		volatile uint32_t traceCtrl;
+		std::array<const volatile uint32_t, 83> reserved3;
+		// +0xFD0
+		pid_t pid;
+		std::array<const volatile uint32_t, 4> cid;
+	};
+
+	// Trace Port Interface Unit structure
+	struct tpiu_t final
+	{
+		const volatile uint32_t supportedParallelSize;
+		volatile uint32_t currentParallelSize;
+		std::array<const volatile uint32_t, 2> reserved0;
+		volatile uint32_t asyncClockPrescale;
+		std::array<const volatile uint32_t, 55> reserved1;
+		volatile uint32_t selectedPinProtocol;
+		std::array<const volatile uint32_t, 131> reserved2;
+		const volatile uint32_t formatterStatus;
+		volatile uint32_t formatterCtrl;
+		const volatile uint32_t formatterSyncCounter;
+		std::array<const volatile uint32_t, 759> reserved3;
+		const volatile uint32_t trigger;
+		const volatile uint32_t etmFIFOData;
+		const volatile uint32_t itATBCounter2;
+		const volatile uint32_t reserved4;
+		const volatile uint32_t itATBCounter0;
+		const volatile uint32_t itmFIFOData;
+		volatile uint32_t itCtrl;
+		std::array<const volatile uint32_t, 39> reserved5;
+		volatile uint32_t claimSet;
+		volatile uint32_t claimClear;
+		std::array<const volatile uint32_t, 8> reserved6;
+		const volatile uint32_t deviceID;
+		const volatile uint32_t deviceType;
+		pid_t pid;
+		std::array<const volatile uint32_t, 4> cid;
+	};
+
+	static_assert(sizeof(tpiu_t) == 4096);
+
+	// Embedded Trace Macrocell structure
+	struct etm_t final
+	{
+		volatile uint32_t mainCtrl;
+		const volatile uint32_t cfgCode;
+		volatile uint32_t triggerEvt;
+		const volatile uint32_t reserved0;
+		volatile uint32_t status;
+		const volatile uint32_t sysCfg;
+		std::array<const volatile uint32_t, 2> reserved1;
+		volatile uint32_t traceEnEvt;
+		volatile uint32_t traceEnCtrl1;
+		volatile uint32_t fifoFullLevel;
+		std::array<const volatile uint32_t, 5> reserved2;
+		volatile uint32_t freeRunCounterReload;
+		std::array<const volatile uint32_t, 103> reserved3;
+		const volatile uint32_t syncFreq;
+		const volatile uint32_t idCode;
+		const volatile uint32_t cfgCodeExt;
+		const volatile uint32_t reserved4;
+		volatile uint32_t traceEnICECtrl;
+		const volatile uint32_t reserved5;
+		volatile uint32_t timestampEvt;
+		const volatile uint32_t reserved6;
+		volatile uint32_t coreSightTraceID;
+	};
+
 	constexpr static uintptr_t usbBase{0x40005c00U};
 	constexpr static uintptr_t packetBufferBase{0x40006000U};
 	constexpr static uintptr_t gpioABase{0x40010800U};
@@ -86,7 +241,14 @@ namespace stm32
 	constexpr static uintptr_t gpioGBase{0x40012000U};
 	constexpr static uintptr_t rccBase{0x40021000U};
 
+	constexpr static uintptr_t itmBase{0xe0000000U};
+	constexpr static uintptr_t sysTickBase{0xe000e010U};
 	constexpr static uintptr_t nvicBase{0xe000e100U};
+	constexpr static uintptr_t scbBase{0xe000ed00U};
+	constexpr static uintptr_t mpuBase{0xe000ed90U};
+	constexpr static uintptr_t dcbBase{0xe000edf0U};
+	constexpr static uintptr_t tpiuBase{0xe0040000U};
+	constexpr static uintptr_t etmBase{0xe0041000U};
 } // namespace stm32
 // NOLINTEND(cppcoreguidelines-avoid-const-or-ref-data-members)
 
@@ -103,7 +265,14 @@ static auto &gpioF{*reinterpret_cast<stm32::gpio_t *>(stm32::gpioFBase)};
 static auto &gpioG{*reinterpret_cast<stm32::gpio_t *>(stm32::gpioGBase)};
 static auto &usbCtrl{*reinterpret_cast<stm32::usb_t *>(stm32::usbBase)};
 
+static auto &sysTick{*reinterpret_cast<stm32::sysTick_t *>(stm32::sysTickBase)};
 static auto &nvic{*reinterpret_cast<stm32::nvic_t *>(stm32::nvicBase)};
+static auto &scb{*reinterpret_cast<stm32::scb_t *>(stm32::scbBase)};
+static auto &mpu{*reinterpret_cast<stm32::mpu_t *>(stm32::mpuBase)};
+static auto &dcb{*reinterpret_cast<stm32::dcb_t *>(stm32::dcbBase)};
+static auto &itm{*reinterpret_cast<stm32::itm_t *>(stm32::itmBase)};
+static auto &tpiu{*reinterpret_cast<stm32::tpiu_t *>(stm32::tpiuBase)};
+static auto &etm{*reinterpret_cast<stm32::etm_t *>(stm32::etmBase)};
 // NOLINTEND(cppcoreguidelines-avoid-non-const-global-variables)
 // NOLINTEND(performance-no-int-to-ptr
 // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast)
