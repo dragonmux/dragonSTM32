@@ -225,7 +225,7 @@ namespace vals
 
 		// Control/Status register constants
 		constexpr static uint32_t ctrlStatusIntLowSpeedOscEn{0x00000001U};
-		constexpr static uint32_t ctrlStatusIntLowSpeedOscEn{0x00000001U};
+		constexpr static uint32_t ctrlStatusIntLowSpeedOscReady{0x00000002U};
 		constexpr static uint32_t ctrlStatusClearResetCause{0x01000000U};
 		constexpr static uint32_t ctrlStatusResetCauseNRST{0x04000000U};
 		constexpr static uint32_t ctrlStatusResetCausePOR{0x08000000U};
