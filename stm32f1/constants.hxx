@@ -222,6 +222,17 @@ namespace vals
 		constexpr static uint32_t apb1PeriphClockEnBackup{0x08000000U};
 		constexpr static uint32_t apb1PeriphClockEnPower{0x10000000U};
 		constexpr static uint32_t apb1PeriphClockEnDAC{0x20000000U};
+
+		// Control/Status register constants
+		constexpr static uint32_t ctrlStatusIntLowSpeedOscEn{0x00000001U};
+		constexpr static uint32_t ctrlStatusIntLowSpeedOscEn{0x00000001U};
+		constexpr static uint32_t ctrlStatusClearResetCause{0x01000000U};
+		constexpr static uint32_t ctrlStatusResetCauseNRST{0x04000000U};
+		constexpr static uint32_t ctrlStatusResetCausePOR{0x08000000U};
+		constexpr static uint32_t ctrlStatusResetCauseSoftware{0x10000000U};
+		constexpr static uint32_t ctrlStatusResetCauseIndepWDT{0x20000000U};
+		constexpr static uint32_t ctrlStatusResetCauseWindowWDT{0x40000000U};
+		constexpr static uint32_t ctrlStatusResetCauseLowPower{0x80000000U};
 	} // namespace rcc
 
 	namespace irqs
