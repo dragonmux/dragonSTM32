@@ -292,6 +292,51 @@ namespace vals
 		constexpr static size_t systemIRQs{15U};
 		constexpr static size_t peripheralIRQs{60U};
 	} // namespace irqs
+
+	namespace scb
+	{
+		constexpr static const uint32_t apintKey{0x05FA0000};
+		constexpr static const uint32_t apintSystemResetRequest{0x00000004};
+	} // namespace scb
+
+	namespace dcb
+	{
+		constexpr static const uint32_t exceptMonitorCtrlEnableTrace{0x01000000U};
+	} // namespace dcb
+
+	namespace itm
+	{
+		// "Stimulus Port" (channel) register read-back constants
+		constexpr static const uint32_t channelReady{0x00000001U};
+
+		// Trace enable register constants
+		constexpr static inline uint32_t enableChannel(const uint8_t channel) noexcept
+			{ return 1U << channel; }
+
+		// Trace control register constants
+		constexpr static const uint32_t traceCtrlEnableITM{0x00000001U};
+		constexpr static const uint32_t traceCtrlDisableITM{0x00000000U};
+		constexpr static const uint32_t traceCtrlEnableLocalTimestamp{0x00000002U};
+		constexpr static const uint32_t traceCtrlDisableLocalTimestamp{0x00000000U};
+		constexpr static const uint32_t traceCtrlEnableSynchronousTPIU{0x00000004U};
+		constexpr static const uint32_t traceCtrlDisableSynchronousTPIU{0x00000000U};
+	} // namespace itm
+
+	namespace tpiu
+	{
+		// Formatter flush control register constants
+		constexpr static const uint32_t formatterCtrlEnableContinuous{0x00000002U};
+		constexpr static const uint32_t formatterCtrlDisableContinuous{0x00000000U};
+		constexpr static const uint32_t formatterCtrlTrigger{0x00000100U};
+
+		// Formatter flush status register constants
+		constexpr static const uint32_t formatterStatusTrigger{0x00000001U};
+
+		// Selected pin protocol register constants
+		constexpr static const uint32_t selectedPinProtocolParallel{0x00000000U};
+		constexpr static const uint32_t selectedPinProtocolSWOManchester{0x00000001U};
+		constexpr static const uint32_t selectedPinProtocolSWONRZ{0x00000002U};
+	} // namespace tpiu
 } // namespace vals
 
 namespace stm32
