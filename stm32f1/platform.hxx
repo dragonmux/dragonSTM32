@@ -56,6 +56,20 @@ namespace stm32
 		volatile uint32_t ctrlStatus;
 	};
 
+	// Flash Controller peripheral structure
+	struct flash_t final
+	{
+		volatile uint32_t accessCtrl;
+		volatile uint32_t flashKey;
+		volatile uint32_t optionKey;
+		volatile uint32_t status;
+		volatile uint32_t control;
+		volatile uint32_t address;
+		const volatile uint32_t reserved;
+		volatile uint32_t optionByte;
+		volatile uint32_t writeProtection;
+	};
+
 	// System (Cortex-M) peripherals
 
 	// System Tick structure
@@ -240,6 +254,7 @@ namespace stm32
 	constexpr static uintptr_t gpioFBase{0x40011c00U};
 	constexpr static uintptr_t gpioGBase{0x40012000U};
 	constexpr static uintptr_t rccBase{0x40021000U};
+	constexpr static uintptr_t flashCtrlBase{0x40022000U};
 
 	constexpr static uintptr_t itmBase{0xe0000000U};
 	constexpr static uintptr_t sysTickBase{0xe000e010U};
@@ -255,7 +270,7 @@ namespace stm32
 // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast)
 // NOLINTBEGIN(performance-no-int-to-ptr
 // NOLINTBEGIN(cppcoreguidelines-avoid-non-const-global-variables)
-static auto &rcc{*reinterpret_cast<stm32::rcc_t *>(stm32::rccBase)};
+static auto &usbCtrl{*reinterpret_cast<stm32::usb_t *>(stm32::usbBase)};
 static auto &gpioA{*reinterpret_cast<stm32::gpio_t *>(stm32::gpioABase)};
 static auto &gpioB{*reinterpret_cast<stm32::gpio_t *>(stm32::gpioBBase)};
 static auto &gpioC{*reinterpret_cast<stm32::gpio_t *>(stm32::gpioCBase)};
@@ -263,7 +278,8 @@ static auto &gpioD{*reinterpret_cast<stm32::gpio_t *>(stm32::gpioDBase)};
 static auto &gpioE{*reinterpret_cast<stm32::gpio_t *>(stm32::gpioEBase)};
 static auto &gpioF{*reinterpret_cast<stm32::gpio_t *>(stm32::gpioFBase)};
 static auto &gpioG{*reinterpret_cast<stm32::gpio_t *>(stm32::gpioGBase)};
-static auto &usbCtrl{*reinterpret_cast<stm32::usb_t *>(stm32::usbBase)};
+static auto &rcc{*reinterpret_cast<stm32::rcc_t *>(stm32::rccBase)};
+static auto &flashCtrl{*reinterpret_cast<stm32::flash_t *>(stm32::flashCtrlBase)};
 
 static auto &sysTick{*reinterpret_cast<stm32::sysTick_t *>(stm32::sysTickBase)};
 static auto &nvic{*reinterpret_cast<stm32::nvic_t *>(stm32::nvicBase)};
