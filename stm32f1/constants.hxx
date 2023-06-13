@@ -361,6 +361,38 @@ namespace vals
 		}
 	} // namespace rcc
 
+	namespace flash
+	{
+		constexpr static uint32_t accessCtrlLatencyMask{0x00000007U};
+		constexpr static uint32_t accessCtrlHalfCycleAccess{0x00000008U};
+		constexpr static uint32_t accessCtrlPrefetchBufferEnable{0x00000010U};
+		constexpr static uint32_t accessCtrlPrefetchBufferStatus{0x00000020U};
+
+		constexpr static uint16_t readUnprotectKey{0x00a5};
+		constexpr static uint32_t unlockKey1{0x45670123U};
+		constexpr static uint32_t unlockKey2{0xcdef89abU};
+
+		constexpr static uint32_t statusBusy{0x00000001U};
+		constexpr static uint32_t statusProgError{0x00000004U};
+		constexpr static uint32_t statusWriteProtError{0x00000010U};
+		constexpr static uint32_t statusEndOfOperation{0x00000020U};
+		constexpr static uint32_t statusErrorMask{0x00000014U};
+
+		constexpr static uint32_t controlProgram{0x00000001U};
+		constexpr static uint32_t controlPageErase{0x00000002U};
+		constexpr static uint32_t controlMassErase{0x00000004U};
+		constexpr static uint32_t controlOptByteProgram{0x00000010U};
+		constexpr static uint32_t controlOptByteErase{0x00000020U};
+		constexpr static uint32_t controlStartErase{0x00000040U};
+		constexpr static uint32_t controlLock{0x00000080U};
+		constexpr static uint32_t controlOptByteItrEnable{0x00000200U};
+		constexpr static uint32_t controlErrorItrEnable{0x00000400U};
+		constexpr static uint32_t controlEndOfOpItrEnable{0x00001000U};
+
+		constexpr inline uint32_t acccesCtrlLatency(uint8_t latency) noexcept
+			{ return latency & accessCtrlLatencyMask; }
+	} // namespace flash
+
 	namespace irqs
 	{
 		constexpr static uint32_t windowWatchdog{0U};
