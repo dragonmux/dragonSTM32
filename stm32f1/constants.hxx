@@ -178,6 +178,40 @@ namespace vals
 
 	namespace rcc
 	{
+		// Clock Control register constants
+		constexpr static uint32_t clockCtrlHSIEnable{0x00000001U};
+		constexpr static uint32_t clockCtrlHSIReady{0x00000002U};
+		constexpr static uint32_t clockCtrlHSEEnable{0x00010000U};
+		constexpr static uint32_t clockCtrlHSEReady{0x00020000U};
+		constexpr static uint32_t clockCtrlPLLEnable{0x01000000U};
+		constexpr static uint32_t clockCtrlPLLReady{0x02000000U};
+
+		// Clock Configuration register constants
+		constexpr static uint32_t clockConfigSourceHSI{0x00000000U};
+		constexpr static uint32_t clockConfigSourceHSE{0x00000001U};
+		constexpr static uint32_t clockConfigSourcePLL{0x00000002U};
+		constexpr static uint32_t clockConfigSourceMask{0x00000003U};
+		constexpr static uint32_t clockConfigStatusHSI{0x00000000U};
+		constexpr static uint32_t clockConfigStatusHSE{0x00000004U};
+		constexpr static uint32_t clockConfigStatusPLL{0x00000008U};
+		constexpr static uint32_t clockConfigStatusMask{0x0000000cU};
+		constexpr static uint32_t clockConfigAHBPrescaleMask{0x000000f0U};
+		constexpr static uint32_t clockConfigAPB1PrescaleMask{0x00000700U};
+		constexpr static uint32_t clockConfigAPB2PrescaleMask{0x00003800U};
+		constexpr static uint32_t clockConfigADCPrescaleMask{0x0000c000U};
+		constexpr static uint32_t clockConfigPLLSourceHSI{0x00000000U};
+		constexpr static uint32_t clockConfigPLLSourceHSE{0x00010000U};
+		constexpr static uint32_t clockConfigPLLSourceMask{0x00010000U};
+		constexpr static uint32_t clockConfigPLLPrescaleMask{0x00020000U};
+		constexpr static uint32_t clockConfigPLLMultiplierMask{0x003c0000U};
+		constexpr static uint32_t clockConfigUSBPrescaleMask{0x00400000U};
+		constexpr static uint32_t clockConfigOutputNone{0x00000000U};
+		constexpr static uint32_t clockConfigOutputSysClock{0x04000000U};
+		constexpr static uint32_t clockConfigOutputHSI{0x05000000U};
+		constexpr static uint32_t clockConfigOutputHSE{0x06000000U};
+		constexpr static uint32_t clockConfigOutputPLL{0x07000000U};
+		constexpr static uint32_t clockConfigOutputMask{0x07000000U};
+
 		// APB2 Peripheral Clock Enable register constants
 		constexpr static uint32_t apb2PeriphClockEnAltFnIO{0x00000001U};
 		constexpr static uint32_t apb2PeriphClockEnGPIOPortA{0x00000004U};
@@ -233,6 +267,98 @@ namespace vals
 		constexpr static uint32_t ctrlStatusResetCauseIndepWDT{0x20000000U};
 		constexpr static uint32_t ctrlStatusResetCauseWindowWDT{0x40000000U};
 		constexpr static uint32_t ctrlStatusResetCauseLowPower{0x80000000U};
+
+		constexpr inline uint32_t clockConfigAHBPrescale(const uint16_t prescale)
+		{
+			return [&]() -> uint32_t
+			{
+				if (prescale < 2U)
+					return 0U;
+				if (prescale < 4U)
+					return 8U;
+				if (prescale < 8U)
+					return 9U;
+				if (prescale < 16U)
+					return 10U;
+				if (prescale < 64U)
+					return 11U;
+				if (prescale < 128U)
+					return 12U;
+				if (prescale < 256U)
+					return 13U;
+				if (prescale < 512U)
+					return 14U;
+				return 15U;
+			}() << 4U;
+		}
+
+		constexpr inline uint32_t clockConfigAPB1Prescale(const uint8_t prescale)
+		{
+			return [&]() -> uint32_t
+			{
+				if (prescale < 2U)
+					return 0U;
+				if (prescale < 4U)
+					return 4U;
+				if (prescale < 8U)
+					return 5U;
+				if (prescale < 16U)
+					return 6U;
+				return 7U;
+			}() << 8U;
+		}
+
+		constexpr inline uint32_t clockConfigAPB2Prescale(const uint8_t prescale)
+		{
+			return [&]() -> uint32_t
+			{
+				if (prescale < 2U)
+					return 0U;
+				if (prescale < 4U)
+					return 4U;
+				if (prescale < 8U)
+					return 5U;
+				if (prescale < 16U)
+					return 6U;
+				return 7U;
+			}() << 11U;
+		}
+
+		constexpr inline uint32_t clockConfigADCPrescale(const uint8_t prescale)
+		{
+			return [&]() -> uint32_t
+			{
+				if (prescale < 4U)
+					return 0U;
+				if (prescale < 6U)
+					return 1U;
+				if (prescale < 8U)
+					return 2U;
+				return 3U;
+			}() << 14U;
+		}
+
+		constexpr inline uint32_t clockConfigPLLPrescale(const uint8_t prescale)
+		{
+			return [&]() -> uint32_t
+			{
+				if (prescale < 2)
+					return 0;
+				return 1;
+			}() << 16U;
+		}
+
+		constexpr inline uint32_t clockConfigPLLMultiplier(const uint8_t multiplier)
+		{
+			return [](int value) -> uint32_t
+			{
+				if (value < 0)
+					return 0U;
+				if (value > 14)
+					return 14U;
+				return uint32_t(value);
+			}(multiplier - 2) << 18U;
+		}
 	} // namespace rcc
 
 	namespace irqs
