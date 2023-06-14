@@ -84,20 +84,21 @@ namespace stm32
 	// Nested Vectored Interrupt Controller structure
 	struct nvic_t final
 	{
-		std::array<volatile uint32_t, 8> intrSetEnable;
-		std::array<const volatile uint32_t, 24> reserved0;
-		std::array<volatile uint32_t, 8> intrClrEnable;
-		std::array<const volatile uint32_t, 24> reserved1;
-		std::array<volatile uint32_t, 8> intrSetPending;
-		std::array<const volatile uint32_t, 24> reserved2;
-		std::array<volatile uint32_t, 8> intrClrPending;
-		std::array<const volatile uint32_t, 24> reserved3;
-		std::array<const volatile uint32_t, 8> intrActive;
+		std::array<volatile uint32_t, 3> intrSetEnable;
+		std::array<const volatile uint32_t, 29> reserved0;
+		std::array<volatile uint32_t, 3> intrClrEnable;
+		std::array<const volatile uint32_t, 29> reserved1;
+		std::array<volatile uint32_t, 3> intrSetPending;
+		std::array<const volatile uint32_t, 29> reserved2;
+		std::array<volatile uint32_t, 3> intrClrPending;
+		std::array<const volatile uint32_t, 29> reserved3;
+		std::array<const volatile uint32_t, 3> intrActive;
+		std::array<const volatile uint32_t, 29> reserved4;
 
 		constexpr void enableInterrupt(const uint32_t intrNumber) noexcept
-			{ intrSetEnable[intrNumber >> 5U] = UINT32_C(1) << (intrNumber & 0x1fU); }
+			{ intrSetEnable[intrNumber >> 5U] = UINT32_C(1) << (intrNumber & 31U); }
 		constexpr void disableInterrupt(const uint32_t intrNumber) noexcept
-			{ intrClrEnable[intrNumber >> 5U] = UINT32_C(1) << (intrNumber & 0x1fU); }
+			{ intrClrEnable[intrNumber >> 5U] = UINT32_C(1) << (intrNumber & 31U); }
 	};
 
 	// System Controller Block
