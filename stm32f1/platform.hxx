@@ -13,7 +13,7 @@ namespace stm32
 	struct usb_t final
 	{
 		std::array<volatile uint32_t, 8> epCtrlStat;
-		std::array<const volatile uint32_t, 4> reserved;
+		std::array<const volatile uint32_t, 8> reserved;
 		volatile uint32_t ctrl;
 		volatile uint32_t intStatus;
 		const volatile uint32_t frameNumber;
