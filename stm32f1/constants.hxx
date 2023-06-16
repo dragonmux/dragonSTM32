@@ -83,6 +83,7 @@ namespace vals
 		constexpr static uint32_t epCtrlTXMask{0xffffff0fU};
 		constexpr static uint32_t epCtrlRXMask{0xffff0fffU};
 		constexpr static uint32_t epCtrlKeepMask{0xffff070fU};
+		constexpr static uint32_t epCtrlCorrectXferMask{0x00008080U};
 
 		// Recieve Endpoint Byte Count register constants
 		constexpr static uint32_t rxCountBlockSize2{0x00000000U};
@@ -134,6 +135,34 @@ namespace vals
 			const auto xferValue{(newValue & epStatusRXCorrectXfer) | epStatusTXCorrectXfer};
 			// Put it all together and write it back
 			usbCtrl.epCtrlStat[endpoint] = xorValue | keepValue | xferValue;
+		}
+
+		static inline void epCtrlSetDataToggleTX(const size_t endpoint, const bool value) noexcept
+		{
+			// Grab the old value
+			const uint32_t oldValue{usbCtrl.epCtrlStat[endpoint]};
+			// Figure out the value we want the toggle bit
+			const uint32_t toggleValue{value ? epTXDataToggle : 0U};
+			// Figure out the XOR bit state accordingly
+			const auto xorValue{(oldValue & epTXDataToggle) ^ toggleValue};
+			// Grab the bits to be kept as-is
+			const auto keepValue{oldValue & epCtrlKeepMask};
+			// Put it all together and write it back
+			usbCtrl.epCtrlStat[endpoint] = xorValue | keepValue | epCtrlCorrectXferMask;
+		}
+
+		static inline void epCtrlSetDataToggleRX(const size_t endpoint, const bool value) noexcept
+		{
+			// Grab the old value
+			const uint32_t oldValue{usbCtrl.epCtrlStat[endpoint]};
+			// Figure out the value we want the toggle bit
+			const uint32_t toggleValue{value ? epRXDataToggle : 0U};
+			// Figure out the XOR bit state accordingly
+			const auto xorValue{(oldValue & epRXDataToggle) ^ toggleValue};
+			// Grab the bits to be kept as-is
+			const auto keepValue{oldValue & epCtrlKeepMask};
+			// Put it all together and write it back
+			usbCtrl.epCtrlStat[endpoint] = xorValue | keepValue | epCtrlCorrectXferMask;
 		}
 	} // namespace usb
 
