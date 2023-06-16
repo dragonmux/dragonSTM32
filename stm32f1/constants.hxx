@@ -62,8 +62,8 @@ namespace vals
 		constexpr static uint32_t epCtrlTXStall{0x00000010U};
 		constexpr static uint32_t epCtrlTXNack{0x00000020U};
 		constexpr static uint32_t epCtrlTXValid{0x00000030U};
-		constexpr static uint32_t epTxDataToggle{0x00000040U};
-		constexpr static uint32_t epStatusTxCorrectXfer{0x00000080U};
+		constexpr static uint32_t epTXDataToggle{0x00000040U};
+		constexpr static uint32_t epStatusTXCorrectXfer{0x00000080U};
 		constexpr static uint32_t epCtrlKindStatusOut{0x00000100U};
 		constexpr static uint32_t epCtrlKindDoubleBuffered{0x00000100U};
 		constexpr static uint32_t epCtrlTypeBulk{0x00000000U};
@@ -75,11 +75,11 @@ namespace vals
 		constexpr static uint32_t epCtrlRXStall{0x00001000U};
 		constexpr static uint32_t epCtrlRXNack{0x00002000U};
 		constexpr static uint32_t epCtrlRXValid{0x00003000U};
-		constexpr static uint32_t epRxDataToggle{0x00004000U};
-		constexpr static uint32_t epStatusRxCorrectXfer{0x00008000U};
-		constexpr static uint32_t epCtrlTXMask{0xffffff0fU};
-		constexpr static uint32_t epCtrlRXMask{0xffff0fffU};
-		constexpr static uint32_t epCtrlTypeMask{0xfffff9ffU};
+		constexpr static uint32_t epRXDataToggle{0x00004000U};
+		constexpr static uint32_t epStatusRXCorrectXfer{0x00008000U};
+		constexpr static uint32_t epStatusXORMask{0x00007070U};
+		constexpr static uint32_t epCtrlKeepMask{0xffff878fU};
+		constexpr static uint32_t epCtrlInvariantValue{0x00008080U};
 
 		// Recieve Endpoint Byte Count register constants
 		constexpr static uint32_t rxCountBlockSize2{0x00000000U};
@@ -103,6 +103,18 @@ namespace vals
 			// Divide the length by 32 then shift it up into place
 			const uint32_t blockCount = (bufferLength >> 5U) << rxCountBlockCountShift;
 			return rxCountBlockSize32 | (blockCount & rxCountBlockCountMask);
+		}
+
+		constexpr inline void epCtrlStatusUpdate(const uint8_t endpoint, const uint16_t newValue)
+		{
+			// Grab the current value of the register
+			const uint32_t oldValue{usbCtrl.epCtrlStat[endpoint]};
+			// Calculate the XOR bits value
+			const auto xorValue{(oldValue ^ newValue) & epStatusXORMask};
+			// Grab the bits to be kept as-is
+			const auto keepValue{newValue & epCtrlKeepMask};
+			// Put it all together and write it back
+			usbCtrl.epCtrlStat[endpoint] = xorValue | keepValue;
 		}
 	} // namespace usb
 
