@@ -80,6 +80,8 @@ namespace vals
 		constexpr static uint32_t epCtrlTypeMask{0xfffff9ffU};
 		constexpr static uint32_t epStatusXORMaskTX{0x00000070U};
 		constexpr static uint32_t epStatusXORMaskRX{0x00007000U};
+		constexpr static uint32_t epCtrlTXMask{0xffffff0fU};
+		constexpr static uint32_t epCtrlRXMask{0xffff0fffU};
 		constexpr static uint32_t epCtrlKeepMask{0xffff878fU};
 
 		// Recieve Endpoint Byte Count register constants
@@ -106,7 +108,7 @@ namespace vals
 			return rxCountBlockSize32 | (blockCount & rxCountBlockCountMask);
 		}
 
-		static inline void epCtrlStatusUpdateTX(const uint8_t endpoint, const uint16_t newValue)
+		static inline void epCtrlStatusUpdateTX(const size_t endpoint, const uint16_t newValue)
 		{
 			// Grab the current value of the register
 			const uint32_t oldValue{usbCtrl.epCtrlStat[endpoint]};
@@ -120,7 +122,7 @@ namespace vals
 			usbCtrl.epCtrlStat[endpoint] = xorValue | keepValue | xferValue;
 		}
 
-		static inline void epCtrlStatusUpdateRX(const uint8_t endpoint, const uint16_t newValue)
+		static inline void epCtrlStatusUpdateRX(const size_t endpoint, const uint16_t newValue)
 		{
 			// Grab the current value of the register
 			const uint32_t oldValue{usbCtrl.epCtrlStat[endpoint]};
