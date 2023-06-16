@@ -77,7 +77,9 @@ namespace vals
 		constexpr static uint32_t epCtrlRXValid{0x00003000U};
 		constexpr static uint32_t epRXDataToggle{0x00004000U};
 		constexpr static uint32_t epStatusRXCorrectXfer{0x00008000U};
-		constexpr static uint32_t epStatusXORMask{0x00007070U};
+		constexpr static uint32_t epCtrlTypeMask{0xfffff9ffU};
+		constexpr static uint32_t epStatusXORMaskTX{0x00000070U};
+		constexpr static uint32_t epStatusXORMaskRX{0x00007000U};
 		constexpr static uint32_t epCtrlKeepMask{0xffff878fU};
 		constexpr static uint32_t epCtrlInvariantValue{0x00008080U};
 
@@ -105,16 +107,28 @@ namespace vals
 			return rxCountBlockSize32 | (blockCount & rxCountBlockCountMask);
 		}
 
-		constexpr inline void epCtrlStatusUpdate(const uint8_t endpoint, const uint16_t newValue)
+		static inline void epCtrlStatusUpdateTX(const uint8_t endpoint, const uint16_t newValue)
 		{
 			// Grab the current value of the register
 			const uint32_t oldValue{usbCtrl.epCtrlStat[endpoint]};
 			// Calculate the XOR bits value
-			const auto xorValue{(oldValue ^ newValue) & epStatusXORMask};
+			const auto xorValue{(oldValue ^ newValue) & epStatusXORMaskTX};
 			// Grab the bits to be kept as-is
-			const auto keepValue{newValue & epCtrlKeepMask};
+			const auto keepValue{(newValue & epCtrlInvariantValue) | epStatusRXCorrectXfer};
 			// Put it all together and write it back
-			usbCtrl.epCtrlStat[endpoint] = xorValue | keepValue;
+			usbCtrl.epCtrlStat[endpoint] = (oldValue & epCtrlKeepMask) | xorValue | keepValue;
+		}
+
+		static inline void epCtrlStatusUpdateRX(const uint8_t endpoint, const uint16_t newValue)
+		{
+			// Grab the current value of the register
+			const uint32_t oldValue{usbCtrl.epCtrlStat[endpoint]};
+			// Calculate the XOR bits value
+			const auto xorValue{(oldValue ^ newValue) & epStatusXORMaskRX};
+			// Grab the bits to be kept as-is
+			const auto keepValue{(newValue & epCtrlInvariantValue) | epStatusTXCorrectXfer};
+			// Put it all together and write it back
+			usbCtrl.epCtrlStat[endpoint] = (oldValue & epCtrlKeepMask) | xorValue | keepValue;
 		}
 	} // namespace usb
 
