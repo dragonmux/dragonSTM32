@@ -109,6 +109,13 @@ namespace vals
 			return rxCountBlockSize32 | (blockCount & rxCountBlockCountMask);
 		}
 
+		static inline void epCtrlStatusSetType(const size_t endpoint, const uint32_t epType) noexcept
+		{
+			const uint32_t value{usbCtrl.epCtrlStat[endpoint]};
+			usbCtrl.epCtrlStat[endpoint] = (value & (epCtrlKeepMask & epCtrlTypeMask)) |
+				epCtrlCorrectXferMask | epType;
+		}
+
 		static inline void epCtrlStatusUpdateTX(const size_t endpoint, const uint16_t newValue) noexcept
 		{
 			// Grab the current value of the register
