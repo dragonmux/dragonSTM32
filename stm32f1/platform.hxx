@@ -9,6 +9,14 @@
 // NOLINTBEGIN(cppcoreguidelines-avoid-const-or-ref-data-members)
 namespace stm32
 {
+	// Info peripheral structure
+	struct info_t final
+	{
+		const volatile uint32_t flashSize;
+		const volatile uint32_t reserved;
+		std::array<const volatile uint32_t, 3> uniqueID;
+	};
+
 	// USB periphal structure
 	struct usb_t final
 	{
@@ -245,6 +253,7 @@ namespace stm32
 		volatile uint32_t coreSightTraceID;
 	};
 
+	constexpr static uintptr_t infoBase{0x1ffff7e0U};
 	constexpr static uintptr_t usbBase{0x40005c00U};
 	constexpr static uintptr_t packetBufferBase{0x40006000U};
 	constexpr static uintptr_t gpioABase{0x40010800U};
@@ -271,6 +280,7 @@ namespace stm32
 // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast)
 // NOLINTBEGIN(performance-no-int-to-ptr
 // NOLINTBEGIN(cppcoreguidelines-avoid-non-const-global-variables)
+static auto &deviceInfo{*reinterpret_cast<stm32::info_t *>(stm32::infoBase)};
 static auto &usbCtrl{*reinterpret_cast<stm32::usb_t *>(stm32::usbBase)};
 static auto &gpioA{*reinterpret_cast<stm32::gpio_t *>(stm32::gpioABase)};
 static auto &gpioB{*reinterpret_cast<stm32::gpio_t *>(stm32::gpioBBase)};
