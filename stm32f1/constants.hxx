@@ -3,6 +3,7 @@
 #define STM32F1_CONSTANTS_HXX
 
 #include <cstdint>
+#include <cstring>
 #include "stm32f1/platform.hxx"
 
 namespace vals
@@ -216,7 +217,7 @@ namespace vals
 
 		namespace internal
 		{
-			constexpr inline uint32_t config(const config_t pinConfig)
+			constexpr inline uint32_t config(const config_t pinConfig) noexcept
 			{
 				const auto value{static_cast<uint8_t>(pinConfig)};
 				if (value < static_cast<uint8_t>(config_t::outputNormalPushPull))
@@ -237,12 +238,17 @@ namespace vals
 				(internal::config(pinConfig) << shift);
 		}
 
-		constexpr inline void clear(stm32::gpio_t &gpio, gpio_t pinNumber)
+		constexpr inline void clear(stm32::gpio_t &gpio, const gpio_t pinNumber) noexcept
 			{ gpio.pinReset = UINT32_C(1) << static_cast<uint8_t>(pinNumber); }
-		constexpr inline void set(stm32::gpio_t &gpio, gpio_t pinNumber)
+		constexpr inline void set(stm32::gpio_t &gpio, const gpio_t pinNumber) noexcept
 			{ gpio.pinSetReset = UINT32_C(1) << static_cast<uint8_t>(pinNumber); }
-		constexpr inline bool value(stm32::gpio_t &gpio, gpio_t pinNumber)
-			{ return gpio.dataIn & (UINT32_C(1) << static_cast<uint8_t>(pinNumber)); }
+
+		constexpr inline bool value(const stm32::gpio_t &gpio, const gpio_t pinNumber) noexcept
+		{
+			uint32_t value{};
+			std::memcpy(&value, const_cast<const uint32_t *>(&gpio.dataIn), sizeof(uint32_t));
+			return value & (UINT32_C(1) << static_cast<uint8_t>(pinNumber));
+		}
 	} // namespace gpio
 
 	namespace rcc
