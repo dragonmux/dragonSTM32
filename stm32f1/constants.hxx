@@ -241,6 +241,8 @@ namespace vals
 			{ gpio.pinReset = UINT32_C(1) << static_cast<uint8_t>(pinNumber); }
 		constexpr inline void set(stm32::gpio_t &gpio, gpio_t pinNumber)
 			{ gpio.pinSetReset = UINT32_C(1) << static_cast<uint8_t>(pinNumber); }
+		constexpr inline bool value(stm32::gpio_t &gpio, gpio_t pinNumber)
+			{ return gpio.dataIn & (UINT32_C(1) << static_cast<uint8_t>(pinNumber)); }
 	} // namespace gpio
 
 	namespace rcc
