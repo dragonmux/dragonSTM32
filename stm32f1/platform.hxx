@@ -64,8 +64,8 @@ namespace stm32
 		volatile uint32_t ctrlStatus;
 	};
 
-	// Flash Controller peripheral structure
-	struct flash_t final
+	// Flash Controller Bank peripheral structure
+	struct flashBank_t final
 	{
 		volatile uint32_t accessCtrl;
 		volatile uint32_t flashKey;
@@ -73,9 +73,17 @@ namespace stm32
 		volatile uint32_t status;
 		volatile uint32_t control;
 		volatile uint32_t address;
-		const volatile uint32_t reserved;
+		const volatile uint32_t reserved1;
 		volatile uint32_t optionByte;
 		volatile uint32_t writeProtection;
+		std::array<const volatile uint32_t, 7> reserved2;
+	};
+
+	// Flash Controller peripheral structure
+	struct flash_t final
+	{
+		static_assert(sizeof(flashBank_t) == 64U, "The Flash bank structure must be 64 bytes long");
+		std::array<volatile flashBank_t, 2> bank;
 	};
 
 	// System (Cortex-M) peripherals

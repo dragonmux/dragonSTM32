@@ -464,6 +464,8 @@ namespace vals
 		constexpr static uint32_t controlErrorItrEnable{0x00000400U};
 		constexpr static uint32_t controlEndOfOpItrEnable{0x00001000U};
 
+		constexpr static std::uintptr_t bankSplit{0x08080000U};
+
 		constexpr inline uint32_t acccesCtrlLatency(uint8_t latency) noexcept
 			{ return latency & accessCtrlLatencyMask; }
 	} // namespace flash
