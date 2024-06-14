@@ -8,6 +8,37 @@
 
 namespace vals
 {
+	namespace rcc
+	{
+		// Control register constants
+		constexpr static uint32_t ctrlHSIEnable{0x00000001U};
+		constexpr static uint32_t ctrlHSIAlwaysEnable{0x00000002U};
+		constexpr static uint32_t ctrlHSIReady{0x00000004U};
+		constexpr static uint32_t ctrlHSIDivideMask{0x00000018U};
+		constexpr static uint32_t ctrlHSIDivide1{0x00000000U};
+		constexpr static uint32_t ctrlHSIDivide2{0x00000008U};
+		constexpr static uint32_t ctrlHSIDivide4{0x00000010U};
+		constexpr static uint32_t ctrlHSIDivide8{0x00000018U};
+		constexpr static uint32_t ctrlHSIDividerActive{0x00000020U};
+		constexpr static uint32_t ctrlCSIEnable{0x00000080U};
+		constexpr static uint32_t ctrlCSIReady{0x00000100U};
+		constexpr static uint32_t ctrlCSIAlwaysOn{0x00000200U};
+		constexpr static uint32_t ctrlHSI48Enable{0x00001000U};
+		constexpr static uint32_t ctrlHSI48Ready{0x00002000U};
+		constexpr static uint32_t ctrlDomain1ClocksReady{0x00004000U};
+		constexpr static uint32_t ctrlDomain2ClocksReady{0x00008000U};
+		constexpr static uint32_t ctrlHSEEnable{0x00010000U};
+		constexpr static uint32_t ctrlHSEReady{0x00020000U};
+		constexpr static uint32_t ctrlHSEBypass{0x00040000U};
+		constexpr static uint32_t ctrlHSEClockSecurityEnable{0x00080000U};
+		constexpr static uint32_t ctrlPLL1Enable{0x01000000U};
+		constexpr static uint32_t ctrlPLL1Ready{0x02000000U};
+		constexpr static uint32_t ctrlPLL2Enable{0x04000000U};
+		constexpr static uint32_t ctrlPLL2Ready{0x08000000U};
+		constexpr static uint32_t ctrlPLL3Enable{0x10000000U};
+		constexpr static uint32_t ctrlPLL3Ready{0x20000000U};
+	} // namespace rcc
+
 	namespace pwr
 	{
 		// Control 1 register constants
