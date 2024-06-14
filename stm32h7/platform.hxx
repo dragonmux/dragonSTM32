@@ -33,6 +33,87 @@ namespace stm32
 		std::array<volatile uint32_t, 2> altFunction;
 	};
 
+	// Reset and Clock Controller peripheral structure
+	struct rcc_t final
+	{
+		volatile uint32_t ctrl;
+		volatile uint32_t hsiConfig;
+		volatile uint32_t clockRecoveryConfig;
+		volatile uint32_t csiConfig;
+		volatile uint32_t config;
+		const volatile uint32_t reserved1;
+		volatile uint32_t domain1Config;
+		volatile uint32_t domain2Config;
+		volatile uint32_t domain3Config;
+		const volatile uint32_t reserved2;
+		volatile uint32_t pllClockSelect;
+		volatile uint32_t pllClockConfig;
+		volatile uint32_t pll1DividerConfig;
+		volatile uint32_t pll1FractionalConfig;
+		volatile uint32_t pll2DividerConfig;
+		volatile uint32_t pll2FractionalConfig;
+		volatile uint32_t pll3DividerConfig;
+		volatile uint32_t pll3FractionalConfig;
+		const volatile uint32_t reserved3;
+		volatile uint32_t domain1ClockConfig;
+		volatile uint32_t domain2ClockConfig1;
+		volatile uint32_t domain2ClockConfig2;
+		volatile uint32_t domain3ClockConfig;
+		const volatile uint32_t reserved4;
+		volatile uint32_t clockIntEnable;
+		volatile uint32_t clockIntStatus;
+		volatile uint32_t clockIntClear;
+		const volatile uint32_t reserved5;
+		volatile uint32_t backupDomainCtrl;
+		volatile uint32_t clockCtrlStatus;
+		const volatile uint32_t reserved6;
+		volatile uint32_t ahb3Reset;
+		volatile uint32_t ahb1Reset;
+		volatile uint32_t ahb2Reset;
+		volatile uint32_t ahb4Reset;
+		volatile uint32_t apb3Reset;
+		std::array<volatile uint32_t, 2> apb1Reset;
+		volatile uint32_t apb2Reset;
+		volatile uint32_t apb4Reset;
+		volatile uint32_t globalCtrl;
+		const volatile uint32_t reserved7;
+		volatile uint32_t domain3AutonomousMode;
+		std::array<const volatile uint32_t, 9> reserved8;
+		volatile uint32_t resetStatus;
+		volatile uint32_t ahb3Enable;
+		volatile uint32_t ahb1Enable;
+		volatile uint32_t ahb2Enable;
+		volatile uint32_t ahb4Enable;
+		volatile uint32_t apb3Enable;
+		std::array<volatile uint32_t, 2> apb1Enable;
+		volatile uint32_t apb2Enable;
+		volatile uint32_t apb4Enable;
+		const volatile uint32_t reserved9;
+		volatile uint32_t ahb3LowPowerEnable;
+		volatile uint32_t ahb1LowPowerEnable;
+		volatile uint32_t ahb2LowPowerEnable;
+		volatile uint32_t ahb4LowPowerEnable;
+		volatile uint32_t apb3LowPowerEnable;
+		std::array<volatile uint32_t, 2> apb1LowPowerEnable;
+		volatile uint32_t apb2LowPowerEnable;
+		volatile uint32_t apb4LowPowerEnable;
+	};
+
+	// Power controller peripheral structure
+	struct pwr_t final
+	{
+		volatile uint32_t ctrl1;
+		const volatile uint32_t status1;
+		volatile uint32_t ctrl2;
+		volatile uint32_t ctrl3;
+		volatile uint32_t cpuCtrl;
+		const volatile uint32_t reserved;
+		volatile uint32_t domain3Ctrl;
+		volatile uint32_t wakeupClear;
+		volatile uint32_t wakeupStatus;
+		volatile uint32_t wakeupEnable;
+	};
+
 	constexpr static uintptr_t infoBase{0x1ff1e800U};
 	constexpr static uintptr_t gpioABase{0x58020000U};
 	constexpr static uintptr_t gpioBBase{0x58020400U};
@@ -44,6 +125,8 @@ namespace stm32
 	constexpr static uintptr_t gpioHBase{0x58021c00U};
 	constexpr static uintptr_t gpioJBase{0x58022400U};
 	constexpr static uintptr_t gpioKBase{0x58022800U};
+	constexpr static uintptr_t rccBase{0x58024400U};
+	constexpr static uintptr_t pwrBase{0x58024800U};
 } // namespace stm32
 // NOLINTEND(cppcoreguidelines-avoid-const-or-ref-data-members)
 
@@ -61,6 +144,8 @@ static auto &gpioG{*reinterpret_cast<stm32::gpio_t *>(stm32::gpioGBase)};
 static auto &gpioH{*reinterpret_cast<stm32::gpio_t *>(stm32::gpioHBase)};
 static auto &gpioJ{*reinterpret_cast<stm32::gpio_t *>(stm32::gpioJBase)};
 static auto &gpioK{*reinterpret_cast<stm32::gpio_t *>(stm32::gpioKBase)};
+static auto &rcc{*reinterpret_cast<stm32::rcc_t *>(stm32::rccBase)};
+static auto &pwr{*reinterpret_cast<stm32::pwr_t *>(stm32::pwrBase)};
 // NOLINTEND(cppcoreguidelines-avoid-non-const-global-variables)
 // NOLINTEND(performance-no-int-to-ptr
 // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast)
