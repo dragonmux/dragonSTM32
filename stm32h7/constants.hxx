@@ -37,6 +37,72 @@ namespace vals
 		constexpr static uint32_t ctrlPLL2Ready{0x08000000U};
 		constexpr static uint32_t ctrlPLL3Enable{0x10000000U};
 		constexpr static uint32_t ctrlPLL3Ready{0x20000000U};
+
+		// Clock configuration register constants
+		constexpr static uint32_t configSystemClockMask{0x00000007U};
+		constexpr static uint32_t configSystemClockHSI{0x00000000U};
+		constexpr static uint32_t configSystemClockCSI{0x00000001U};
+		constexpr static uint32_t configSystemClockHSE{0x00000002U};
+		constexpr static uint32_t configSystemClockPLL{0x00000003U};
+		constexpr static uint32_t configActiveSystemClockMask{0x00000038U};
+		constexpr static size_t configActiveSystemClockShift{2U};
+		constexpr static uint32_t configPostStopSysClockHSI{0x00000000U};
+		constexpr static uint32_t configPostStopSysClockCSI{0x00000040U};
+		constexpr static uint32_t configPostStopPeriphClockHSI{0x00000000U};
+		constexpr static uint32_t configPostStopPeriphClockCSI{0x00000080U};
+		constexpr static uint32_t configRTCFromHSEDividerMask{0x00003f00U};
+		constexpr static uint32_t configTimerPrescaler2{0x00000000U};
+		constexpr static uint32_t configTimerPrescaler4{0x00008000U};
+		constexpr static uint32_t configClockOut1PrescalerMask{0x003c0000U};
+		constexpr static uint32_t configClockOut1SourceMask{0x01c00000U};
+		constexpr static uint32_t configClockOut1SourceHSI{0x00000000U};
+		constexpr static uint32_t configClockOut1SourceLSE{0x00400000U};
+		constexpr static uint32_t configClockOut1SourceHSE{0x00800000U};
+		constexpr static uint32_t configClockOut1SourcePLL1Q{0x00c00000U};
+		constexpr static uint32_t configClockOut1SourceHSI48{0x01000000U};
+		constexpr static uint32_t configClockOut2PrescalerMask{0x1e000000U};
+		constexpr static uint32_t configClockOut2SourceMask{0xe0000000U};
+		constexpr static uint32_t configClockOut2SourceSysClock{0x00000000U};
+		constexpr static uint32_t configClockOut2SourcePLL2P{0x20000000U};
+		constexpr static uint32_t configClockOut2SourceHSE{0x40000000U};
+		constexpr static uint32_t configClockOut2SourcePLL1P{0x60000000U};
+		constexpr static uint32_t configClockOut2SourceCSI{0x80000000U};
+		constexpr static uint32_t configClockOut2SourceLSI{0xa0000000U};
+
+		constexpr inline uint32_t configRTCFromHSEDivider(const uint8_t divider) noexcept
+			{ return static_cast<uint32_t>(divider & 0x3fU) << 8U; }
+		constexpr inline uint32_t configClockOut1Prescaler(const uint8_t prescaler) noexcept
+			{ return static_cast<uint32_t>(prescaler & 0x0fU) << 18U; }
+		constexpr inline uint32_t configClockOut2Prescaler(const uint8_t prescaler) noexcept
+			{ return static_cast<uint32_t>(prescaler & 0x0fU) << 25U; }
+
+		// Domain 1 clock configuration register constants
+		constexpr static uint32_t domain1ConfigAHBPrescalerMask{0x0000000fU};
+		constexpr static uint32_t domain1ConfigAPB3PrescalerMask{0x00000070U};
+		constexpr static uint32_t domain1ConfigCorePrescalerMask{0x00000f00U};
+
+		// XXX: These need to properly handle the high bit enables and map the input values
+		constexpr inline uint32_t domain1ConfigAHBPrescaler(const uint8_t prescaler) noexcept
+			{ return static_cast<uint32_t>(prescaler); }
+		constexpr inline uint32_t domain1ConfigAPB3Prescaler(const uint8_t prescaler) noexcept
+			{ return static_cast<uint32_t>(prescaler) << 4U; }
+		constexpr inline uint32_t domain1ConfigCorePrescaler(const uint8_t prescaler) noexcept
+			{ return static_cast<uint32_t>(prescaler) << 8U; }
+
+		// Domain 2 clock configuration register constants
+		constexpr static uint32_t domain2ConfigAPB1PrescalerMask{0x00000070U};
+		constexpr static uint32_t domain2ConfigAPB2PrescalerMask{0x00000700U};
+
+		constexpr inline uint32_t domain2ConfigAPB1Prescaler(const uint8_t prescaler) noexcept
+			{ return static_cast<uint32_t>(prescaler) << 4U; }
+		constexpr inline uint32_t domain2ConfigAPB2Prescaler(const uint8_t prescaler) noexcept
+			{ return static_cast<uint32_t>(prescaler) << 8U; }
+
+		// Domain 3 clock configuration register constants
+		constexpr static uint32_t domain3ConfigAPB4PrescalerMask{0x00000030U};
+
+		constexpr inline uint32_t domain3ConfigAPB4Prescaler(const uint8_t prescaler) noexcept
+			{ return static_cast<uint32_t>(prescaler) << 4U; }
 	} // namespace rcc
 
 	namespace pwr
