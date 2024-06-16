@@ -253,6 +253,29 @@ namespace vals
 		constexpr static uint32_t domain3ClockConfigSAI6CSI{0x40000000U};
 		constexpr static uint32_t domain3ClockConfigSAI6HSE{0x50000000U};
 		constexpr static uint32_t domain3ClockConfigSAI6I2CClk{0x60000000U};
+
+		// Backup domain control register constants
+		constexpr static uint32_t backupDomainCtrlLSIEnable{0x00000001U};
+		constexpr static uint32_t backupDomainCtrlLSIReady{0x00000002U};
+		constexpr static uint32_t backupDomainCtrlLSEBypass{0x00000004U};
+		constexpr static uint32_t backupDomainCtrlLSEDriveMask{0x00000018U};
+		constexpr static uint32_t backupDomainCtrlLSEDriveLow{0x00000000U};
+		constexpr static uint32_t backupDomainCtrlLSEDriveMediumLow{0x00000008U};
+		constexpr static uint32_t backupDomainCtrlLSEDriveMediumHigh{0x00000010U};
+		constexpr static uint32_t backupDomainCtrlLSEDriveHigh{0x00000018U};
+		constexpr static uint32_t backupDomainCtrlLSESecEnable{0x00000020U};
+		constexpr static uint32_t backupDomainCtrlLSESecFailDetected{0x00000040U};
+		constexpr static uint32_t backupDomainCtrlRTCClockMask{0x00000300U};
+		constexpr static uint32_t backupDomainCtrlRTCClockNone{0x00000000U};
+		constexpr static uint32_t backupDomainCtrlRTCClockLSE{0x00000100U};
+		constexpr static uint32_t backupDomainCtrlRTCClockLSI{0x00000200U};
+		constexpr static uint32_t backupDomainCtrlRTCClockDividedHSE{0x00000300U};
+		constexpr static uint32_t backupDomainCtrlRTCEnable{0x00008000U};
+		constexpr static uint32_t backupDomainCtrlDomainReset{0x00010000U};
+
+		// Clock control and status register constants
+		constexpr static uint32_t clockCtrlStatusLSIEnable{0x00000001U};
+		constexpr static uint32_t clockCtrlStatusLSIReady{0x00000002U};
 	} // namespace rcc
 
 	namespace pwr
