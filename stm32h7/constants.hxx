@@ -279,14 +279,14 @@ namespace vals
 
 		// AHB3 peripheral reset register constants
 		constexpr static uint32_t ahb3ResetMDMA{0x00000001U};
-		constexpr static uint32_t ahb3ResetDMA2{0x00000010U};
+		constexpr static uint32_t ahb3ResetDMA2D{0x00000010U};
 		constexpr static uint32_t ahb3ResetFMC{0x00001000U};
 		constexpr static uint32_t ahb3ResetOctoSPI1{0x00004000U};
 		constexpr static uint32_t ahb3ResetSDMMC1{0x00010000U};
 		constexpr static uint32_t ahb3ResetOctoSPI2{0x00080000U};
 		constexpr static uint32_t ahb3ResetOctoSPIIOManager{0x00200000U};
-		constexpr static uint32_t ahb3ResetOTFDEC1{0x00400000U};
-		constexpr static uint32_t ahb3ResetOTFDEC2{0x00800000U};
+		constexpr static uint32_t ahb3ResetOTFDec1{0x00400000U};
+		constexpr static uint32_t ahb3ResetOTFDec2{0x00800000U};
 		constexpr static uint32_t ahb3ResetCPU{0x80000000U};
 
 		// AHB1 peripheral reset register constants
@@ -294,7 +294,7 @@ namespace vals
 		constexpr static uint32_t ahb1ResetDMA2{0x00000002U};
 		constexpr static uint32_t ahb1ResetADC1_2{0x00000020U};
 		constexpr static uint32_t ahb1ResetEth1MAC{0x00008000U};
-		constexpr static uint32_t ahb1ResetUSB1OTHS{0x02000000U};
+		constexpr static uint32_t ahb1ResetUSB1HS{0x02000000U};
 
 		// AHB2 peripheral reset register constants
 		constexpr static uint32_t ahb2ResetDCMI_PSSI{0x00000001U};
@@ -313,7 +313,7 @@ namespace vals
 		constexpr static uint32_t ahb4ResetGPIOE{0x00000010U};
 		constexpr static uint32_t ahb4ResetGPIOF{0x00000020U};
 		constexpr static uint32_t ahb4ResetGPIOG{0x00000040U};
-		constexpr static uint32_t ahb4ResetGPIOJ{0x00000080U};
+		constexpr static uint32_t ahb4ResetGPIOH{0x00000080U};
 		constexpr static uint32_t ahb4ResetGPIOJ{0x00000200U};
 		constexpr static uint32_t ahb4ResetGPIOK{0x00000400U};
 		constexpr static uint32_t ahb4ResetCRC{0x00080000U};
@@ -365,7 +365,7 @@ namespace vals
 		constexpr static uint32_t apb2ResetTIM8{0x00000002U};
 		constexpr static uint32_t apb2ResetUSART1{0x00000010U};
 		constexpr static uint32_t apb2ResetUSART6{0x00000020U};
-		constexpr static uint32_t apb2ResetUSART9{0x00000040U};
+		constexpr static uint32_t apb2ResetUART9{0x00000040U};
 		constexpr static uint32_t apb2ResetUSART10{0x00000080U};
 		constexpr static uint32_t apb2ResetSPI1{0x00001000U};
 		constexpr static uint32_t apb2ResetSPI4{0x00002000U};
@@ -390,8 +390,160 @@ namespace vals
 		constexpr static uint32_t apb4ResetSAI4{0x00200000U};
 		constexpr static uint32_t apb4ResetDTS{0x04000000U};
 
-		// APB4 peripheral reset register constants
+		// Globally controled peripheral reset register constants
 		constexpr static uint32_t globalCtrlWWDG1ResetScope{0x00000001U};
+
+		// Domain 3 autonomous mode register constants
+		constexpr static uint32_t domain3AutonomousModeBDMAEnable{0x00000001U};
+		constexpr static uint32_t domain3AutonomousModeLPUART1Enable{0x00000008U};
+		constexpr static uint32_t domain3AutonomousModeSPI6Enable{0x00000020U};
+		constexpr static uint32_t domain3AutonomousModeI2C4Enable{0x00000080U};
+		constexpr static uint32_t domain3AutonomousModeLPTIM2Enable{0x00000200U};
+		constexpr static uint32_t domain3AutonomousModeLPTIM3Enable{0x00000400U};
+		constexpr static uint32_t domain3AutonomousModeLPTIM4Enable{0x00000800U};
+		constexpr static uint32_t domain3AutonomousModeLPTIM5Enable{0x00001000U};
+		constexpr static uint32_t domain3AutonomousModeComp1_2Enable{0x00004000U};
+		constexpr static uint32_t domain3AutonomousModeVRefEnable{0x00008000U};
+		constexpr static uint32_t domain3AutonomousModeRTCEnable{0x00010000U};
+		constexpr static uint32_t domain3AutonomousModeCRCEnable{0x00080000U};
+		constexpr static uint32_t domain3AutonomousModeSAI4Enable{0x00200000U};
+		constexpr static uint32_t domain3AutonomousModeADC3Enable{0x01000000U};
+		constexpr static uint32_t domain3AutonomousModeDTSEnable{0x04000000U};
+		constexpr static uint32_t domain3AutonomousModeBRKAMEnable{0x10000000U};
+		constexpr static uint32_t domain3AutonomousModeSRAM4Enable{0x20000000U};
+
+		// Reset status register constants
+		constexpr static uint32_t resetStatusClearFlags{0x00010000U};
+		constexpr static uint32_t resetStatusCPU{0x00020000U};
+		constexpr static uint32_t resetStatusDomain1{0x00080000U};
+		constexpr static uint32_t resetStatusDomain2{0x00100000U};
+		constexpr static uint32_t resetStatusBOR{0x00200000U};
+		constexpr static uint32_t resetStatusResetPin{0x00400000U};
+		constexpr static uint32_t resetStatusPOR{0x00800000U};
+		constexpr static uint32_t resetStatusSystem{0x01000000U};
+		constexpr static uint32_t resetStatusIWDG1{0x04000000U};
+		constexpr static uint32_t resetStatusWWDG1{0x10000000U};
+		constexpr static uint32_t resetStatusLowPowerError{0x40000000U};
+
+		// AHB3 peripheral enable register constants
+		constexpr static uint32_t ahb3EnableMDMA{0x00000001U};
+		constexpr static uint32_t ahb3EnableDMA2D{0x00000010U};
+		constexpr static uint32_t ahb3EnableFMC{0x00001000U};
+		constexpr static uint32_t ahb3EnableOctoSPI1{0x00004000U};
+		constexpr static uint32_t ahb3EnableSDMMC1{0x00010000U};
+		constexpr static uint32_t ahb3EnableOctoSPI2{0x00800000U};
+		constexpr static uint32_t ahb3EnableOctoSPIIOManager{0x02000000U};
+		constexpr static uint32_t ahb3EnableOTFDec1{0x04000000U};
+		constexpr static uint32_t ahb3EnableOTFDec2{0x08000000U};
+
+		// AHB1 peripheral enable register constants
+		constexpr static uint32_t ahb1EnableDMA1{0x00000001U};
+		constexpr static uint32_t ahb1EnableDMA2{0x00000002U};
+		constexpr static uint32_t ahb1EnableADC1_2{0x00000020U};
+		constexpr static uint32_t ahb1EnableEth1MAC{0x00008000U};
+		constexpr static uint32_t ahb1EnableEth1Tx{0x00010000U};
+		constexpr static uint32_t ahb1EnableEth1Rx{0x00020000U};
+		constexpr static uint32_t ahb1EnableUSB1HS{0x02000000U};
+		constexpr static uint32_t ahb1EnableUSB1Phy{0x04000000U};
+
+		// AHB2 peripheral enable register constants
+		constexpr static uint32_t ahb2EnableDCMI_PSSI{0x00000001U};
+		constexpr static uint32_t ahb2EnableCrypt{0x00000010U};
+		constexpr static uint32_t ahb2EnableHash{0x00000020U};
+		constexpr static uint32_t ahb2EnableRNG{0x00000040U};
+		constexpr static uint32_t ahb2EnableSDMMC2{0x00000200U};
+		constexpr static uint32_t ahb2EnableFMAC{0x00010000U};
+		constexpr static uint32_t ahb2EnableCORDIC{0x00020000U};
+		constexpr static uint32_t ahb2EnableSRAM1{0x20000000U};
+		constexpr static uint32_t ahb2EnableSRAM2{0x40000000U};
+
+		// AHB4 peripheral enable register constants
+		constexpr static uint32_t ahb4EnableGPIOA{0x00000001U};
+		constexpr static uint32_t ahb4EnableGPIOB{0x00000002U};
+		constexpr static uint32_t ahb4EnableGPIOC{0x00000004U};
+		constexpr static uint32_t ahb4EnableGPIOD{0x00000008U};
+		constexpr static uint32_t ahb4EnableGPIOE{0x00000010U};
+		constexpr static uint32_t ahb4EnableGPIOF{0x00000020U};
+		constexpr static uint32_t ahb4EnableGPIOG{0x00000040U};
+		constexpr static uint32_t ahb4EnableGPIOH{0x00000080U};
+		constexpr static uint32_t ahb4EnableGPIOJ{0x00000200U};
+		constexpr static uint32_t ahb4EnableGPIOK{0x00000400U};
+		constexpr static uint32_t ahb4EnableCRC{0x00080000U};
+		constexpr static uint32_t ahb4EnableBDMA{0x00200000U};
+		constexpr static uint32_t ahb4EnableADC3{0x01000000U};
+		constexpr static uint32_t ahb4EnableHSEM{0x02000000U};
+		constexpr static uint32_t ahb4EnableBKRAM{0x10000000U};
+
+		// APB3 peripheral enable register constants
+		constexpr static uint32_t apb3EnableLTDC{0x00000008U};
+		constexpr static uint32_t apb3EnableWWDG1{0x00000040U};
+
+		// APB1 peripheral enable register 1 constants
+		constexpr static uint32_t apb1Enable1TIM2{0x00000001U};
+		constexpr static uint32_t apb1Enable1TIM3{0x00000002U};
+		constexpr static uint32_t apb1Enable1TIM4{0x00000004U};
+		constexpr static uint32_t apb1Enable1TIM5{0x00000008U};
+		constexpr static uint32_t apb1Enable1TIM6{0x00000010U};
+		constexpr static uint32_t apb1Enable1TIM7{0x00000020U};
+		constexpr static uint32_t apb1Enable1TIM12{0x00000040U};
+		constexpr static uint32_t apb1Enable1TIM13{0x00000080U};
+		constexpr static uint32_t apb1Enable1TIM14{0x00000100U};
+		constexpr static uint32_t apb1Enable1LPTIM1{0x00000200U};
+		constexpr static uint32_t apb1Enable1SPI2{0x00004000U};
+		constexpr static uint32_t apb1Enable1SPI3{0x00008000U};
+		constexpr static uint32_t apb1Enable1SPDIFRX{0x00010000U};
+		constexpr static uint32_t apb1Enable1USART2{0x00020000U};
+		constexpr static uint32_t apb1Enable1USART3{0x00040000U};
+		constexpr static uint32_t apb1Enable1UART4{0x00080000U};
+		constexpr static uint32_t apb1Enable1UART5{0x00100000U};
+		constexpr static uint32_t apb1Enable1I2C1{0x00200000U};
+		constexpr static uint32_t apb1Enable1I2C2{0x00400000U};
+		constexpr static uint32_t apb1Enable1I2C3{0x00800000U};
+		constexpr static uint32_t apb1Enable1I2C5{0x02000000U};
+		constexpr static uint32_t apb1Enable1HDMI_CEC{0x08000000U};
+		constexpr static uint32_t apb1Enable1DAC1_2{0x20000000U};
+		constexpr static uint32_t apb1Enable1UART7{0x40000000U};
+		constexpr static uint32_t apb1Enable1UART8{0x80000000U};
+
+		// APB1 peripheral enable register 2 constants
+		constexpr static uint32_t apb1Enable2CRS{0x00000002U};
+		constexpr static uint32_t apb1Enable2SWPMI{0x00000004U};
+		constexpr static uint32_t apb1Enable2OpAmp{0x00000010U};
+		constexpr static uint32_t apb1Enable2DMIOS{0x00000020U};
+		constexpr static uint32_t apb1Enable2FDCAN{0x00000100U};
+		constexpr static uint32_t apb1Enable2TIM23{0x01000000U};
+		constexpr static uint32_t apb1Enable2TIM24{0x02000000U};
+
+		// APB2 peripheral enable register constants
+		constexpr static uint32_t apb2EnableTIM1{0x00000001U};
+		constexpr static uint32_t apb2EnableTIM8{0x00000002U};
+		constexpr static uint32_t apb2EnableUSART1{0x00000010U};
+		constexpr static uint32_t apb2EnableUSART6{0x00000020U};
+		constexpr static uint32_t apb2EnableUART9{0x00000040U};
+		constexpr static uint32_t apb2EnableUSART10{0x00000080U};
+		constexpr static uint32_t apb2EnableSPI1{0x00001000U};
+		constexpr static uint32_t apb2EnableSPI4{0x00002000U};
+		constexpr static uint32_t apb2EnableTIM15{0x00010000U};
+		constexpr static uint32_t apb2EnableTIM16{0x00020000U};
+		constexpr static uint32_t apb2EnableTIM17{0x00040000U};
+		constexpr static uint32_t apb2EnableSPI5{0x00100000U};
+		constexpr static uint32_t apb2EnableSAI1{0x00400000U};
+		constexpr static uint32_t apb2EnableDFSDM1{0x40000000U};
+
+		// APB4 peripheral enable register constants
+		constexpr static uint32_t apb4EnableSysCfg{0x00000002U};
+		constexpr static uint32_t apb4EnableLPUART1{0x00000008U};
+		constexpr static uint32_t apb4EnableSPI6{0x00000020U};
+		constexpr static uint32_t apb4EnableI2C4{0x00000080U};
+		constexpr static uint32_t apb4EnableLPTIM2{0x00000200U};
+		constexpr static uint32_t apb4EnableLPTIM3{0x00000400U};
+		constexpr static uint32_t apb4EnableLPTIM4{0x00000800U};
+		constexpr static uint32_t apb4EnableLPTIM5{0x00001000U};
+		constexpr static uint32_t apb4EnableComp1_2{0x00004000U};
+		constexpr static uint32_t apb4EnableVRefBuf{0x00008000U};
+		constexpr static uint32_t apb4EnableRTCAPB{0x00010000U};
+		constexpr static uint32_t apb4EnableSAI4{0x00200000U};
+		constexpr static uint32_t apb4EnableDTS{0x04000000U};
 	} // namespace rcc
 
 	namespace pwr
