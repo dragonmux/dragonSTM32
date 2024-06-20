@@ -124,6 +124,7 @@ namespace stm32
 	};
 
 	constexpr static uintptr_t infoBase{0x1ff1e800U};
+	constexpr static uintptr_t usb1HSBase{0x40040000U};
 	constexpr static uintptr_t crsBase{0x40008400U};
 	constexpr static uintptr_t gpioABase{0x58020000U};
 	constexpr static uintptr_t gpioBBase{0x58020400U};
