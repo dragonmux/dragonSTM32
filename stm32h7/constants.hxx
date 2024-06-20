@@ -38,6 +38,93 @@ namespace vals
 			{ return static_cast<uint32_t>(divider & 0x07U) << 24U; }
 	} // namespace crs
 
+	enum class gpio_t : uint8_t
+	{
+		pin0 = 0,
+		pin1 = 1,
+		pin2 = 2,
+		pin3 = 3,
+		pin4 = 4,
+		pin5 = 5,
+		pin6 = 6,
+		pin7 = 7,
+		pin8 = 8,
+		pin9 = 9,
+		pin10 = 10,
+		pin11 = 11,
+		pin12 = 12,
+		pin13 = 13,
+		pin14 = 14,
+		pin15 = 15,
+	};
+
+	namespace gpio
+	{
+		enum class mode_t : uint8_t
+		{
+			input = 0U,
+			output = 1U,
+			alternateFunction = 2U,
+			analog = 3U
+		};
+
+		enum class outputType_t : uint8_t
+		{
+			pushPull = 0U,
+			openDrain = 1U
+		};
+
+		enum class outputSpeed_t : uint8_t
+		{
+			speed2MHz = 0,
+			speed25MHz = 1,
+			speed50MHz = 2,
+			speed100MHz = 3,
+		};
+
+		enum class resistor_t : uint8_t
+		{
+			none = 0,
+			pullUp = 1,
+			pullDown = 2,
+		};
+
+		template<gpio_t pinNumber> static inline void config(stm32::gpio_t &gpio, const mode_t pinMode,
+			const resistor_t pullConfig, const outputSpeed_t speed = outputSpeed_t::speed2MHz,
+			const outputType_t type = outputType_t::pushPull) noexcept
+		{
+			constexpr auto pinShift{(static_cast<uint8_t>(pinNumber) << 1U)};
+			constexpr auto pinMask{~(3U << pinShift)};
+			gpio.mode = (gpio.mode & pinMask) | (static_cast<uint32_t>(pinMode) << pinShift);
+			gpio.pullUpDownConfig = (gpio.pullUpDownConfig & pinMask) |
+				(static_cast<uint32_t>(pullConfig) << pinShift);
+			gpio.outputType = (gpio.outputType & ~(1U << static_cast<uint8_t>(pinNumber))) |
+				(static_cast<uint32_t>(type) << static_cast<uint8_t>(pinNumber));
+			gpio.outputSpeed = (gpio.outputSpeed & pinMask) | (static_cast<uint32_t>(speed) << pinShift);
+		}
+
+		template<gpio_t pinNumber> static inline void altFunction(stm32::gpio_t &gpio,
+			const uint8_t functionNumber) noexcept
+		{
+			constexpr size_t index{(static_cast<uint8_t>(pinNumber) >> 3U) & 1U};
+			constexpr auto shift{(static_cast<uint8_t>(pinNumber) & 7U) << 2U};
+			constexpr auto functionMask{~(0x0000000fU << shift)};
+			gpio.altFunction[index] = (gpio.altFunction[index] & functionMask) |
+				(static_cast<uint32_t>(functionNumber & 0xfU) << shift);
+		}
+
+		static inline void clear(stm32::gpio_t &gpio, const gpio_t pinNumber) noexcept
+			{ gpio.pinSetReset = (UINT32_C(1) << static_cast<uint8_t>(pinNumber)) << 16U; }
+		static inline void set(stm32::gpio_t &gpio, const gpio_t pinNumber) noexcept
+			{ gpio.pinSetReset = UINT32_C(1) << static_cast<uint8_t>(pinNumber); }
+
+		static inline bool value(const stm32::gpio_t &gpio, const gpio_t pinNumber) noexcept
+		{
+			const auto value{gpio.dataIn};
+			return value & (UINT32_C(1) << static_cast<uint8_t>(pinNumber));
+		}
+	} // namespace gpio
+
 	namespace rcc
 	{
 		// Control register constants
