@@ -8,6 +8,36 @@
 
 namespace vals
 {
+	namespace crs
+	{
+		// Control register constants
+		constexpr static uint32_t ctrlSyncOKItrEnable{0x00000001U};
+		constexpr static uint32_t ctrlSyncWarnItrEnable{0x00000002U};
+		constexpr static uint32_t ctrlErrorItrEnable{0x00000004U};
+		constexpr static uint32_t ctrlExpectedSyncItrEnable{0x00000008U};
+		constexpr static uint32_t ctrlErrorCounterEnable{0x00000020U};
+		constexpr static uint32_t ctrlAutoTrimEnable{0x00000040U};
+		constexpr static uint32_t ctrlSoftwareSync{0x00000080U};
+		constexpr static uint32_t ctrlTrimMask{0x00003f00U};
+
+		// Configuration register constants
+		constexpr static uint32_t configReloadMask{0x0000ffffU};
+		constexpr static uint32_t configFreqErrorLimitMask{0x00ff0000U};
+		constexpr static uint32_t configSyncDividerMask{0x07000000U};
+		constexpr static uint32_t configSyncSourceMask{0x30000000U};
+		constexpr static uint32_t configSyncSourceCRSSync{0x00000000U};
+		constexpr static uint32_t configSyncSourceLSE{0x10000000U};
+		constexpr static uint32_t configSyncSourceUSBSOF{0x20000000U};
+		constexpr static uint32_t configSyncRising{0x00000000U};
+		constexpr static uint32_t configSyncFalling{0x80000000U};
+
+		constexpr inline uint32_t configFreqErrorLimit(const uint8_t limit) noexcept
+			{ return static_cast<uint32_t>(limit) << 16U; }
+		// XXX: This needs the division factors switch-case'd
+		constexpr inline uint32_t configSyncDivider(const uint8_t divider) noexcept
+			{ return static_cast<uint32_t>(divider & 0x07U) << 24U; }
+	} // namespace crs
+
 	namespace rcc
 	{
 		// Control register constants

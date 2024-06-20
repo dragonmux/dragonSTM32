@@ -19,6 +19,15 @@ namespace stm32
 		const volatile uint32_t lineID;
 	};
 
+	// Clock recovery system controller peripheral structure
+	struct crs_t final
+	{
+		volatile uint32_t ctrl;
+		volatile uint32_t config;
+		volatile uint32_t intStatus;
+		volatile uint32_t intClear;
+	};
+
 	// GPIO peripheral structure
 	struct gpio_t final
 	{
@@ -115,6 +124,7 @@ namespace stm32
 	};
 
 	constexpr static uintptr_t infoBase{0x1ff1e800U};
+	constexpr static uintptr_t crsBase{0x40008400U};
 	constexpr static uintptr_t gpioABase{0x58020000U};
 	constexpr static uintptr_t gpioBBase{0x58020400U};
 	constexpr static uintptr_t gpioCBase{0x58020800U};
@@ -134,6 +144,7 @@ namespace stm32
 // NOLINTBEGIN(performance-no-int-to-ptr
 // NOLINTBEGIN(cppcoreguidelines-avoid-non-const-global-variables)
 static auto &deviceInfo{*reinterpret_cast<stm32::info_t *>(stm32::infoBase)};
+static auto &crs{*reinterpret_cast<stm32::crs_t *>(stm32::crsBase)};
 static auto &gpioA{*reinterpret_cast<stm32::gpio_t *>(stm32::gpioABase)};
 static auto &gpioB{*reinterpret_cast<stm32::gpio_t *>(stm32::gpioBBase)};
 static auto &gpioC{*reinterpret_cast<stm32::gpio_t *>(stm32::gpioCBase)};
