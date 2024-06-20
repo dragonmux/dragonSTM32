@@ -228,22 +228,22 @@ namespace vals
 			}
 		} // namespace internal
 
-		template<gpio_t pinNumber> constexpr inline void config(stm32::gpio_t &gpio, const mode_t pinMode,
-			const config_t pinConfig)
+		template<gpio_t pinNumber> static inline void config(stm32::gpio_t &gpio, const mode_t pinMode,
+			const config_t pinConfig) noexcept
 		{
-			constexpr size_t index = (static_cast<uint8_t>(pinNumber) >> 3U) & 1U;
-			constexpr uint8_t shift = (static_cast<uint8_t>(pinNumber) & 7U) * 4U;
-			constexpr uint32_t configMask = ~((0x0000000fU) << shift);
+			constexpr size_t index{(static_cast<uint8_t>(pinNumber) >> 3U) & 1U};
+			constexpr auto shift{(static_cast<uint8_t>(pinNumber) & 7U) * 4U};
+			constexpr auto configMask{~(0x0000000fU << shift)};
 			gpio.config[index] = (gpio.config[index] & configMask) | (static_cast<uint32_t>(pinMode) << shift) |
 				(internal::config(pinConfig) << shift);
 		}
 
-		constexpr inline void clear(stm32::gpio_t &gpio, const gpio_t pinNumber) noexcept
+		static inline void clear(stm32::gpio_t &gpio, const gpio_t pinNumber) noexcept
 			{ gpio.pinReset = UINT32_C(1) << static_cast<uint8_t>(pinNumber); }
-		constexpr inline void set(stm32::gpio_t &gpio, const gpio_t pinNumber) noexcept
+		static inline void set(stm32::gpio_t &gpio, const gpio_t pinNumber) noexcept
 			{ gpio.pinSetReset = UINT32_C(1) << static_cast<uint8_t>(pinNumber); }
 
-		constexpr inline bool value(const stm32::gpio_t &gpio, const gpio_t pinNumber) noexcept
+		static inline bool value(const stm32::gpio_t &gpio, const gpio_t pinNumber) noexcept
 		{
 			uint32_t value{};
 			std::memcpy(&value, const_cast<const uint32_t *>(&gpio.dataIn), sizeof(uint32_t));
